@@ -242,7 +242,7 @@ ggplot(df_lr, aes(x=p, y=pv))+
 
 ```
 
-![](img_LR_Wald_score_binom/pfun_LR0.png)
+![](/images/lr_wald_score/pfun_LR0.png)
 
 
 このグラフを例えば 0.05 の高さで切ってやれば95%信頼区間が求まる.
@@ -263,7 +263,7 @@ ggplot(df_lr, aes(x=p, y=pv))+
 
 ```
 
-![](img_LR_Wald_score_binom/pfun_LR.png)
+![](/images/lr_wald_score/pfun_LR.png)
 
 
 ### Wald 検定
@@ -329,7 +329,7 @@ ggplot(data = df_pv, aes(x=p, y=pv, colour=method, group = method, linetype=meth
 ggsave("proptest.png")
 ```
 
-![](img_LR_Wald_score_binom/proptest.png)
+![](/images/lr_wald_score/proptest.png)
 
 
 より大きい p 値が出やすい検定がより広い信頼区間を与える.
