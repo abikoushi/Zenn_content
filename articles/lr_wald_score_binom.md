@@ -242,7 +242,7 @@ ggplot(df_lr, aes(x=p, y=pv))+
 
 ```
 
-![](/images/lr_wald_score/pfun_LR0.png)
+![](/images/lr_wald_score/pfun_lr0.png)
 
 
 このグラフを例えば 0.05 の高さで切ってやれば95%信頼区間が求まる.
@@ -263,7 +263,7 @@ ggplot(df_lr, aes(x=p, y=pv))+
 
 ```
 
-![](/images/lr_wald_score/pfun_LR.png)
+![](/images/lr_wald_score/pfun_lr.png)
 
 
 ### Wald 検定
