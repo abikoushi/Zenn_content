@@ -1,4 +1,4 @@
-
+#尤度比検定
 LRtest <- function(p,x,n){
   phat <- x/n
   lp <- 2*(dbinom(x, n, phat ,log = TRUE)-
@@ -33,7 +33,6 @@ ggplot(df_lr, aes(x=p, y=pv))+
 ggsave("pfun_lr.png")
 
 ##
-
 waldtest <- function(p,x,n){
   phat <- x/n
   se <- sqrt(phat*(1-phat)/n)

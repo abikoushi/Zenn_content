@@ -340,3 +340,7 @@ ggsave("proptest.png")
 これだけではどの検定が良い検定かはまだわからない（次の記事に続く予定…）.
 
 しかし p 値が計算できれば検定も区間推定もできることがわかった.
+
+Rのコード全体はこちら：
+
+https://github.com/abikoushi/Zenn_content/blob/28b54a4fa9641c360d8df0fb285b29e8d5b9f78c/R/lr_wald_score.R
