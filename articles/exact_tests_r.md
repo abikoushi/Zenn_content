@@ -84,7 +84,7 @@ p-value (by definition):  0.02148438
 この計算は R では `binom.test` という関数で実装されている：
 
 ```r
-res0_b <- binom.test(x = 9, n = 10, p = 0.5)
+res0_b <- binom.test(x = 8, n = 10, p = 0.5)
 cat("p-value (binom.test): ", res0_b$p.value, "\n")
 print(res0_b$p.value)
 ```
