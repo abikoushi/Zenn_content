@@ -1,17 +1,20 @@
 ---
-title: ""
+title: "R の exact test についてのノート"
 emoji: "😊"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: []
-published: false
+topics: [R, 仮説検定, 信頼区間]
+published: true
 ---
 
 
-## 要旨
+## 要約
 
-R の
+$100(1-\alpha)$% 信頼区間が $\theta_0$ を含まないことと有意水準 $\alpha$ の仮説検定で帰無仮説 $\theta_0$ が棄却されることは同じのはずだが, R にデフォルトで入っている `stats` パッケージの exact test を行う関数（`binom.test`, `poisson.test`, `fisher.test`）を使うとこれが一致しないことがある.
 
-## 前置き: p 値について（再）入門するための手短な例
+これらの関数の `p.value` が定義通りに計算した p 値を返すが, `conf.int` は片側検定から定まる p 値の小さい方の2倍で計算した p 値と整合するように書かれているためと思われる.
+
+
+## 長い前置き: p 値について（再）入門するための手短な例
 
 
 [統計的有意性と P 値に関する ASA 声明　(PDF 直リンク)](https://www.biometrics.gr.jp/news/all/ASA.pdf) には,「おおざっぱにいうと、P 値とは特定の統計モデルのもとで、データの統計的要約（たとえば、2 グループ比較での標本平均の差）が観察された値と等しいか、それよりも極端な値をとる確率である。」と記されている.
@@ -21,11 +24,12 @@ R の
 統計モデルのパラメータ を$\theta_0$ とし, データの統計的要約, すなわちデータ $X$ の関数である **検定統計量** を $T(X)$ とする. 検定統計量 $T(X)$ が観測された値 $t$ の出る確率かそれより小さい確率になる確率の総和
 
 $$
-p = \sum_t P_{\theta_0}(T(X) \le t) \tag{1}
+p\text{-value} = \sum_t P_{\theta_0}(T(X) \le t) \tag{1}
 $$
 
 が p 値である.
 
+パラメータ$\theta_0$ を（例えば中央値=0のような形で）1つ決めたとしてもどんな確率分布で確率を測るかは決まらないので「特定の統計モデルのもとで」という断り書きが必要になる(パラメータ付きの確率分布で考えておくと, 例えば分布の仮定から多少外れていたときにp値がどうなるかといったロバストネスの議論などがしやすくなる). 
 
 通例は, 
 
@@ -36,10 +40,10 @@ $$
 
 しかし第一歩として, (1)式を理解するための例をやってみる.
 
-いま, 0または1の2値で表される変数　$X=(X_1, \ldots, X_n)$ に対して, $n=10$ の観測のうち9回が1だった
+いま, 0または1の2値で表される変数　$X=(X_1, \ldots, X_n)$ に対して, $n=10$ の観測のうち8回が1だった
 
 $$
-T(X) = \sum_{i=1}^{n} X_i = 9
+T(X) = \sum_{i=1}^{n} X_i = 8
 $$
 
 としよう. 
@@ -54,7 +58,7 @@ R のコード：
 
 pb <- dbinom(0:10, 10, 0.5)
 
-t_p <- dbinom(9, 10, 0.5)
+t_p <- dbinom(8, 10, 0.5)
 
 cols = ifelse(pb <= t_p, "orangered", "grey80")
 png("binom_barplot.png")
@@ -65,28 +69,27 @@ dev.off()
 cat("p-value (by definition): ", sum(pb[pb <= t_p]), "\n")
 ```
 
-![](img1/binom_barplot.png)
+実行結果:
+
+![](/images/exact_test_r/binom_barplot.png)
 
 ```r
 > cat("p-value (by definition): ", sum(pb[pb <= t_p]), "\n")
 p-value (by definition):  0.02148438 
 ```
 
-検定統計量 $T(X)=9$ が観測された値 $t$ の出る確率かそれより小さい確率になる確率の総和
 
-棒グラフの赤いところをすべて足し合わせている.
+棒グラフの赤いところをすべて足し合わせている（検定統計量 $T(X)$ が観測された値 8 の出る確率かそれより小さい確率になる確率の総和）.
 
 この計算は R では `binom.test` という関数で実装されている：
 
 ```r
 res0_b <- binom.test(x = 9, n = 10, p = 0.5)
 cat("p-value (binom.test): ", res0_b$p.value, "\n")
-
-print(res0_b)
+print(res0_b$p.value)
 ```
 
 実行してみると同じ結果が得られると思う.
-
 
 ここで再度 [統計的有意性と P 値に関する ASA 声明　(PDF 直リンク)](https://www.biometrics.gr.jp/news/all/ASA.pdf) にあたって,「P 値はデータと特定の統計モデル（訳注:仮説も統計モデルの要素のひとつ）が矛盾する程度をしめす指標のひとつである。」という一文に着目してみよう.
 
@@ -105,12 +108,34 @@ ggplot(data = NULL)+
   theme_bw(16)+
   labs(x="param.", y="p-value", colour="method", linetype="method")
 #ggsave("pvfun_b.png")
-
 ```
 
+p 値が0.05になる高さでグラフを切ってやると95%信頼区間と一致……しない.
+
+![](/images/exact_test_r/pvfun_binom.png)
+
+なぜか微妙に一致しない. 他の検定ではこれでうまくいっていたのに……. 参考：
+
+- [尤度比検定, ワルド検定, スコア検定](https://zenn.dev/abe2/articles/lr_wald_score_binom)
+- [ウィルコクソン検定](https://zenn.dev/articles/7a4a36c5d27b0d/edit)
 
 
-ところで `binom.test` の結果には ``
+最初, この投稿は[統計的有意性と P 値に関する ASA 声明　(PDF 直リンク)](https://www.biometrics.gr.jp/news/all/ASA.pdf) の補助テキストのような感じにできたらいいなと思って書き始めた.
+
+しかしこのような不整合があるので路線を変更して先に "R の exact test についてのノート" を書くことにした（長い前置き終わり）.
+
+
+## 二項検定
+
+`binom.test` で信頼区間に p 値との不整合が生じた理由は, どうも異なる定義の方法を使っているかららしい.
+
+つぎのように片側検定の p 値の2倍で両側検定の p 値を定義すると一致した.
+
+![](/images/exact_test_r/pvfun_binom2.png)
+
+分布が左右対称のときは片側検定の p 値の2倍が両側検定の p 値と一致すると思うが, そうでないときは一致しない.
+
+ところで `binom.test` の結果には `Exact binomial test` と書かれている.
 
 ```r
 > print(res0_b)
@@ -128,15 +153,111 @@ probability of success
                    0.9 
 ```
 
-検定の場合の "Exact" は大体の場合「サンプルサイズが大きいときに成り立つ近似を使わない」程度の意味であることが多い.
+統計的仮説検定の場合の "Exact" は「サンプルサイズが大きいときにだけ成り立つような近似を使わない」程度の意味であることが多い.
+
+（なのでもしかしたらこの記事の後の方に出てくるフィッシャーの正確確率検定もフィッシャーの直接確率検定くらいに訳すのがいいのかもしれないとも思ったが, 今回は送り.）
+
+このような exact test は確率分布の数だけ考えられるが, 二項検定以外に比較的よく使われるものが次のポアソン検定とフィッシャーの正確確率検定である.
 
 
+## ポアソン検定
 
-最初に引いた『現代数理統計学の基礎』には
+ポアソン検定を行う `poisson.test` も同じ方針で実装されている.
 
-と書かれているが尤度比検定やスコア検定でも信頼区間を与えることができた. 
+```r
+pvfun0 <- function(r, x, tau){
+  pu <- ppois(x-1, r*tau, lower.tail = FALSE)
+  pl <- ppois(x, r*tau, lower.tail = TRUE)
+  2*pmin(pl, pu)
+}
+rvec <- seq(0.01,3,by=0.01)
+pv_p <- sapply(rvec, function(r)poisson.test(8, 10, r = r)$p.value)
+pv_p0 <- pvfun0(rvec, 8, 10)
+res0_p <- poisson.test(8, 10)
+
+ggplot(data = NULL)+
+  geom_line(aes(x=rvec, y=pv_p, colour="by definicion"))+
+  geom_line(aes(x=rvec, y=pv_p0, colour="twice one-side"))+
+  geom_errorbarh(aes(y=0.05, xmin = res0_p$conf.int[1], xmax=res0_p$conf.int[2], colour="twice one-side"),
+                 height=0.03)+
+  theme_bw(16)+
+  labs(x="param.", y="p-value", colour="method", linetype="method")
+```
+
+![](/images/exact_test_r/pvfun_pois.png)
 
 
-パラメータ$\theta_0$ を（例えば中央値=0のような形で）1つ決めたとしてもどんな確率分布で確率を測るかは決まらないので「特定の統計モデルのもとで」という断り書きが必要になる(パラメータ付きの確率分布で考えておくと, 例えば分布の仮定から多少外れていたときにp値がどうなるかといったロバストネスの議論などがしやすくなる)
+## フィッシャーの正確確率検定
+
+フィッシャーの正確確率検定を行う `fisher.test` も同じ方針で実装されている（[2×2の表，オッズ比，相対危険度](https://okumuralab.org/~okumura/stat/2by2.html)）が, そもそも帰無仮説のオッズ比を直接指定できる形式になっていない…….
+
+フィッシャーの非心超幾何分布（[Fisher's noncentral hypergeometric distribution - Wikipedia](https://en.wikipedia.org/wiki/Fisher%27s_noncentral_hypergeometric_distribution)）は `MCMCpack` というパッケージにあったのでこれを使う.
+
+```r
+confint_fisher <- function(X, level=0.95){
+  rs <- rowSums(X)
+  cs <- colSums(X)
+  alpha <- 1-level
+  testfun_up <- function(phi){
+    pall <- MCMCpack::dnoncenhypergeom(x = NA, cs[1],cs[2],rs[1], exp(phi))
+    i <- match(X[1,1],pall[,1])
+    pv <- sum(pall[i:nrow(pall),2])
+    pv-alpha/2
+  }
+  testfun_low <- function(phi){
+    pall <- MCMCpack::dnoncenhypergeom(x = NA,
+                                       cs[1],cs[2],rs[1], exp(phi))
+    i <- match(X[1,1],pall[,1])
+    pv <- sum(pall[1:i,2])
+    pv-alpha/2
+  }
+  res_u <- uniroot(testfun_up, lower = -10, upper = 10)
+  res_l <- uniroot(testfun_low, lower = -10, upper = 10)
+  list(oddsratio=c(exp(res_u$root),exp(res_l$root)))
+}
+
+X <-matrix(c(12,5,6,12), nrow=2)
+resf <- fisher.test(X, conf.level = 0.95)
+```
+
+片側検定の p 値の2倍で両側検定の p 値を定義すると `fisher.test` の返す信頼区間と一致することがわかった.
 
 
+```r
+> print(resf$conf.int)
+[1]  0.9465292 25.7201471
+attr(,"conf.level")
+[1] 0.95
+> print(confint_fisher(X))
+$oddsratio
+[1]  0.9465291 25.7205551
+```
+
+`exact2x2` パッケージの `exact2x2` 関数は帰無仮説のオッズ比を指定できるし p 値と信頼区間が整合するよう書かれているので基本的にこちらを使うといいと思う.
+
+
+## まとめ
+
+検定とか信頼区画というのはそんなものと思う（誤差だと思って気にしない）という方針もあり得ると思う.
+
+しかし私の意見としては簡単に整合させられる部分は整合させておいた方がいいように思う.
+
+帰無仮説のパラメータを引数にして p 値を返す関数が書かれていれば, こんなふうにして信頼区間も得ることができ, 2つが整合する:
+
+```r
+pvfun <- Vectorize(FUN = function(mu0){
+  binom.test(8, 10,  p=mu0)$p.value  
+})
+sol_ci <- rootSolve::uniroot.all(f = function(p){pvfun(p)-0.05}, interval = c(0.1,0.99))
+print(sol_ci)
+```
+
+もちろん帰無仮説を動かしたときの p 値全体（p 値関数）をプロットしても良い.
+
+```r
+curve(pvfun(x), 0.1, 0.99, n=1001)
+```
+
+![](/images/exact_test_r/pfun_simple.png)
+
+おしまい.

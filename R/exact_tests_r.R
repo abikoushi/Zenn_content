@@ -1,86 +1,114 @@
+library(ggplot2)
+library(patchwork)
 library(rootSolve)
-library(exact2x2)
+library(MCMCpack)
 
+pb <- dbinom(0:10, 10, 0.5)
+t_p <- dbinom(8, 10, 0.5)
+cols = ifelse(pb <= t_p, "orangered", "grey80")
+#png("binom_barplot.png")
+barplot(pb, names.arg = 0:10, col=cols)
+#dev.off()
+cat("p-value (by definition): ", sum(pb[pb <= t_p]), "\n")
+
+res0_b <- binom.test(x = 8, n = 10, p = 0.5)
+cat("p-value (binom.test): ", res0_b$p.value, "\n")
+print(res0_b$p.value)
+
+z <- seq(0.1, 0.99, by=0.005)
+pv_b <- sapply(z, function(p)binom.test(8, 10, p = p)$p.value)
+
+ggplot(data = NULL)+
+  geom_line(aes(x=z, y=pv_b))+
+  geom_errorbarh(aes(y=0.05, xmin = res0_b$conf.int[1], xmax=res0_b$conf.int[2]),
+                 height=0.03, colour="cornflowerblue")+
+  theme_bw(16)+
+  labs(x="param.", y="p-value", colour="method", linetype="method")
+#ggsave("pvfun_binom.png")
+
+###
+#binom.test
 pvfun0 <- function(p, x, n){
   pu <- pbinom(x-1, n, p, lower.tail = FALSE)
   pl <- pbinom(x, n, p, lower.tail = TRUE)
   2*pmin(pl, pu)
 }
-sol0 <-uniroot.all(f = function(p){pvfun0(p,5,10)-0.05},
-            interval = c(0.1,0.9))
-res_b <- binom.test(5, 10)
-print(res_b$conf.int)
-print(sol0)
-
-pvfun <- function(p){
-  sapply(p, function(p)binom.test(5,10,p)$p.value)
-}
-sol <- uniroot.all(f = function(p){pvfun(p)-0.05},
-            interval = c(0.1,0.9))
-print(sol)
-
-curve(pvfun0(x, 5, 10))
-curve(pvfun(x), col="red", add=TRUE)
+pv_b0 <- pvfun0(z, 8, 10)
+ggplot(data = NULL)+
+  geom_line(aes(x=z, y=pv_b, colour="by definicion"))+
+  geom_line(aes(x=z, y=pv_b0, colour="twice one-side"))+
+  geom_errorbarh(aes(y=0.05, xmin = res0_b$conf.int[1], xmax=res0_b$conf.int[2], colour="twice one-side"),
+                 height=0.03)+
+  theme_bw(16)+
+  labs(x="param.", y="p-value", colour="method", linetype="method")
+ggsave("pvfun_binom2.png")
 
 ###
-pvec <- seq(0.01,0.99,by=0.01)
-pval <- sapply(pvec, function(p)binom.test(5, 10, p = p)$p.value)
-#png("confint1.png")
-plot(pvec, pval, type="s", xlab="param", ylab="p-value")
-
-segments(x0 = res_b$conf.int[1], x1 = res_b$conf.int[2],
-         y0 = 0.05, y1 = 0.05, col="royalblue")
-#dev.off()
-png("confint2.png")
-plot(pvec, pval, type="s", xlab="param", ylab="p-value")
-segments(x0 = sol[1], x1 = sol[2],
-         y0 = 0.05, y1 = 0.05, col="orangered")
-dev.off()
-
-
-###
-library(rootSolve)
+#poisson.test
 pvfun0 <- function(r, x, tau){
   pu <- ppois(x-1, r*tau, lower.tail = FALSE)
   pl <- ppois(x, r*tau, lower.tail = TRUE)
   2*pmin(pl, pu)
 }
-sol0 <-uniroot.all(f = function(p){pvfun0(p,5,10)-0.05},
-                   interval = c(0.1,3))
-sol0
-res_p
-res_p <- poisson.test(5, 10, r=1)
-print(res_p$conf.int)
-print(sol0)
-
-#confidence interval from p-value 
-pvfun <- function(r){
-  sapply(r, function(r)poisson.test(5,10,r=r)$p.value)
-}
-sol <- uniroot.all(f = function(p){pvfun(p)-0.05},
-                   interval = c(0.1,3))
-print(sol)
-###
-#plot p-value fun
 rvec <- seq(0.01,3,by=0.01)
-pval <- sapply(rvec, function(r)poisson.test(5, 10, r = r)$p.value)
-png("confint1.png")
-plot(rvec, pval, type="s", xlab="param", ylab="p-value")
-segments(x0 = res_p$conf.int[1], x1 = res_p$conf.int[2],
-         y0 = 0.05, y1 = 0.05, col="royalblue")
-dev.off()
-png("confint2.png")
-plot(rvec, pval, type="s", xlab="param", ylab="p-value")
-segments(x0 = sol[1], x1 = sol[2],
-         y0 = 0.05, y1 = 0.05, col="orangered")
-dev.off()
+pv_p <- sapply(rvec, function(r)poisson.test(8, 10, r = r)$p.value)
+pv_p0 <- pvfun0(rvec, 8, 10)
+res0_p <- poisson.test(8, 10)
+
+ggplot(data = NULL)+
+  geom_line(aes(x=rvec, y=pv_p, colour="by definicion"))+
+  geom_line(aes(x=rvec, y=pv_p0, colour="twice one-side"))+
+  geom_errorbarh(aes(y=0.05, xmin = res0_p$conf.int[1], xmax=res0_p$conf.int[2], colour="twice one-side"),
+                 height=0.03)+
+  theme_bw(16)+
+  labs(x="param.", y="p-value", colour="method", linetype="method")
+
+ggsave("pvfun_pois.png")
+
+#####
+#fisher.test
+confint_fisher <- function(X, level=0.95){
+  rs <- rowSums(X)
+  cs <- colSums(X)
+  alpha <- 1-level
+  testfun_up <- function(phi){
+    pall <- MCMCpack::dnoncenhypergeom(x = NA, cs[1],cs[2],rs[1], exp(phi))
+    i <- match(X[1,1],pall[,1])
+    pv <- sum(pall[i:nrow(pall),2])
+    pv-alpha/2
+  }
+  testfun_low <- function(phi){
+    pall <- MCMCpack::dnoncenhypergeom(x = NA,
+                                       cs[1],cs[2],rs[1], exp(phi))
+    i <- match(X[1,1],pall[,1])
+    pv <- sum(pall[1:i,2])
+    pv-alpha/2
+  }
+  res_u <- uniroot(testfun_up, lower = -10, upper = 10)
+  res_l <- uniroot(testfun_low, lower = -10, upper = 10)
+  list(oddsratio=c(exp(res_u$root),exp(res_l$root)))
+}
+X <-matrix(c(12,5,6,12), nrow=2)
+
+resf <- fisher.test(X, conf.level = 0.95)
+print(resf$conf.int)
+print(confint_fisher(X))
+
+exact2x2::exact2x2(X)
 
 ###
+#まとめ
 
-pfun <- Vectorize(FUN = function(mu0){
-  dat <- c(2,5,0,1,3)
-  t.test(dat, mu=mu0)$p.value  
+pvfun <- Vectorize(FUN = function(mu0){
+  binom.test(8, 10,  p=mu0)$p.value  
 })
-png("pfun.png")
-curve(pfun(x), -2, to = 6, n=1001)
+sol_ci <- rootSolve::uniroot.all(f = function(p){pvfun(p)-0.05}, interval = c(0.1,0.99))
+print(sol_ci)
+
+png("pfun_simple.png")
+curve(pvfun(x), 0.1, 0.99, n=1001)
 dev.off()
+
+##
+
+

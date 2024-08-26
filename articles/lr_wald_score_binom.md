@@ -2,7 +2,7 @@
 title: "尤度比検定, ワルド検定, スコア検定から定まる信頼区間：二項分布の例"
 emoji: "🐕"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [R, 仮説検定]
+topics: [R, 仮説検定, 信頼区間]
 published: true
 ---
 
