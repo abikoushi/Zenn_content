@@ -98,6 +98,9 @@ p値が小さいほど「矛盾の程度が大きい」のだから帰無仮説�
 今回パラメータの取りうる値の範囲が0から1までなので総当たりでもさほど大変ではない.
 
 ```r
+library(ggplot2)
+library(rootSolve)
+library(MCMCpack)
 z <- seq(0.1, 0.99, by=0.005)
 pv_b <- sapply(z, function(p)binom.test(8, 10, p = p)$p.value)
 
@@ -259,5 +262,10 @@ curve(pvfun(x), 0.1, 0.99, n=1001)
 ```
 
 ![](/images/exact_test_r/pfun_simple.png)
+
+
+この記事で使用したRのコード全体はこちら：
+
+https://github.com/abikoushi/Zenn_content/blob/main/R/exact_tests_r.R
 
 おしまい.

@@ -1,5 +1,4 @@
 library(ggplot2)
-library(patchwork)
 library(rootSolve)
 library(MCMCpack)
 
@@ -108,7 +107,3 @@ print(sol_ci)
 png("pfun_simple.png")
 curve(pvfun(x), 0.1, 0.99, n=1001)
 dev.off()
-
-##
-
-
