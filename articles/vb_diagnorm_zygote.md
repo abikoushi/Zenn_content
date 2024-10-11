@@ -1,5 +1,5 @@
 ---
-title: ""
+title: "事後分布を正規分布で近似する変分ベイズ法"
 emoji: "📑"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: []
