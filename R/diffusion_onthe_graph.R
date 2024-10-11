@@ -1,56 +1,9 @@
-library(readr)
-library(sf)
-library(tidyverse)
-library(tmap)
-library(lwgeom)
-library(zipangu)
-# library(gganimate)
-library(animation)
-# library(ggraph)
-# require(tidygraph)
-library(arcdiagram)
-#devtools::install_github('gastonstat/arcdiagram')
+#5*5
+A <- matrix(0,24,24)
+i <- 1
+i+1
+5*i + i
 
-un_graphe <- rbind(
-  c("fromage", "pain"),
-  c("pain", "vin"),
-  c("vin", "biere"),
-  c("cidre", "biere"),
-  c("foie", "fromage"),
-  c("pain", "foie"))
-
-arcplot(un_graphe)
-arcplot(un_graphe, horizontal=FALSE)
-arcplot(un_graphe, above = c(1, 3, 5))
-arcplot(un_graphe, sorted=TRUE)
-
-path <- "/Users/koabe/data/gm-jpn-all_u_2_2/"
-gm_jpn <- read_sf(paste0(path, "polbnda_jpn.shp"))
-
-class(gm_jpn)
-
-gm_jpn <- group_by(gm_jpn,nam) %>%
-  summarize()
-head(gm_jpn)
-#plot(gm_jpn)
-
-ggplot(data=gm_jpn) +
-  geom_sf() + 
-  coord_sf(crs=sf::st_crs("EPSG:3857"),
-           default_crs = sf::st_crs("EPSG:4326")) + 
-  theme_bw()
-
-
-jpname <- read_csv(paste0(path,"data-map-JIS.txt"), col_names = c("num","name"))
-jpmap <- read_csv(paste0(path,"data-map-neighbor.txt"))
-jpname
-range(jpmap$From)
-range(jpmap$To)
-
-A <- matrix(0,46,46)
-A[cbind(jpmap$From,jpmap$To)] <- 1
-A[cbind(jpmap$To, jpmap$From)] <- 1
-image(A)
 L <- diag(rowSums(A)) - A
 image(L)
 L
