@@ -83,8 +83,6 @@ plot(logloss,legend=false)
 plot(logloss,legend=false)
 plot!(logloss2,legend=false)
 
-μ
-μ2
 
 eps = randn(2)
 A = eps * eps'
