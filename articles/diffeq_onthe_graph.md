@@ -6,7 +6,7 @@ topics: [偏微分方程式,R,数値計算]
 published: false
 ---
 
-[離散化された拡散方程式の状態空間モデル](https://zenn.dev/abe2/articles/10bc59bec3280c) の続き的な投稿だが, 先の投稿を予備知識として要求しない.
+[離散化された拡散方程式の状態空間モデル](https://zenn.dev/abe2/articles/10bc59bec3280c) の続き的な内容だが, 先の投稿を予備知識として要求しない.
 
 さて，1次元の拡散方程式
 
