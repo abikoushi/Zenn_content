@@ -37,11 +37,11 @@ p(y) &= \int p(y|r)p(r) dr\\
 \end{align*}
 $$
 
-$r$ に依存しない因子を積分記号の外に出して計算します。
+ガンマ関数の定義が $\Gamma (z)=\int _{0}^{\infty }t^{z-1}e^{-t}\,{\rm {d}}t$ であることを用いて、$r$ に依存しない因子を積分記号の外に出して計算します。
 
 $$
 \begin{align*}
-p(y)&=\frac{\mu^y \alpha^\alpha}{y!\Gamma(\alpha)}\left(\frac{1}{\mu+\alpha}\right)^{y+\alpha}\int^{\infty}_{0} r^{y+\alpha}e^{-r}\,dr\\
+p(y)&=\frac{\mu^y \alpha^\alpha}{y!\Gamma(\alpha)}\left(\frac{1}{\mu+\alpha}\right)^{y+\alpha}\int^{\infty}_{0} r^{y+\alpha-1}e^{-r}\,dr\\
 &=\frac{\Gamma(y+\alpha)}{y!\Gamma(\alpha)}\left(\frac{1}{\mu+\alpha}\right)^{y+\alpha}\mu^y\alpha^\alpha\\
 &=\frac{\Gamma(y+\alpha)}{y!\Gamma(\alpha)}\left(\frac{\alpha}{\alpha+\mu}\right)^\alpha\left(\frac{\mu}{\alpha+\mu}\right)^y
 \end{align*}
@@ -151,7 +151,7 @@ opt <-optim(c(0,0),ll,y=dat$pop,tau=log(dat$area),control = list(fnscale=-1))
 ```
 こちらも最尤推定されたパラメータを持つ分布から1万回乱数の抽出をおこない、分布の95%区間をプロットしてみます。
 
-前半の考察を確かめるため、ガンマ分布にしたがってパラメータが変化するポアソン分布を愚直に書いていdます。
+前半の考察を確かめるため、ガンマ分布にしたがってパラメータが変化するポアソン分布を愚直に書いています。
 
 ```r
 r <- rgamma(10000*47,exp(opt$par[1]),exp(opt$par[1]))
