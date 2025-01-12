@@ -188,8 +188,8 @@ $$
 
 $$
 \begin{aligned}
-F^{eq} (y) = &\frac{1}{2} \left(1+x \operatorname{erfc}\left(\frac{\log(x) - \mu}{\sigma \sqrt(2)} \right)\exp(-(\mu + (\sigma^2)/2)\right) \\
-&- \frac{\operatorname{erf}(\mu + \sigma^2 - \log(x)}{\sigma \sqrt(2))}.
+F^{eq} (y) = &\frac{1}{2} \left(1+x \operatorname{erfc}\left(\frac{\log(x) - \mu}{\sigma \sqrt{2}} \right)\exp(-(\mu + \sigma^2/2)\right) \\
+&- \frac{\operatorname{erf}(\mu + \sigma^2 - \log(x)}{\sigma \sqrt{2})}.
 \end{aligned}
 $$
 
