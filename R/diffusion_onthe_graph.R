@@ -1,55 +1,112 @@
-#5*5
-A <- matrix(0,24,24)
-i <- 1
-i+1
-5*i + i
+library(Matrix)
+library(dplyr)
+library(ggplot2)
+library(gganimate)
 
-L <- diag(rowSums(A)) - A
-image(L)
-L
-nt <- 19
-set.seed(1234)
-u <- rbinom(46,1,0.2)
+make_adjmat_2d <-function(nr, nc){
+  nn = as.integer(nr*nc)
+  A <- Matrix::spMatrix(nrow = nn, ncol = nn)
+  edges = nr*(0:nc) 
+  for(i in 1L:nn){
+    if(i-nr > 0){ #left bound
+      A[i,i-nr] <- 1
+    }
+    if( i %% nr != 1L ){ #top bound
+      A[i,i-1] <- 1
+    }
+    if((i+nr) <= nn){ #right bound
+      A[i,i+nr] <- 1
+    }
+    if( (i %% nr != 0L) & i+1L <= nn ){ #bottom bound
+      A[i,i+1] <- 1
+    }
+  }
+  return(A)
+}
 
-difit <- function(L,u,nt,r){
+
+difit <- function(coef, u, nt){
   U <- matrix(0, nt+1, length(u))
   U[1,] <- u
-  r <- 0.05
   for(i in 1:nt){
-    u2 <- u - r*L%*%u
-    U[i+1,] <- u2
+    u2 <- coef%*%u
+    U[i+1,] <- as.vector(u2)
     u <- u2
   }
   return(U)
 }
 
+makecoef_exp <- function(r, A){
+  diag(nrow = nrow(A)) + r*(A-diag(rowSums(A)))
+}
+
+makecoef_imp <- function(r, A){
+  solve(diag(nrow = nrow(A)) - r*(A-diag(rowSums(A))))
+}
+
+A <- make_adjmat_2d(5,5)
+
+jpeg("adjmat.jpg")
+image(A)
+dev.off()
+
+r <- 0.02
+#beta <- makecoef_exp(r, A)
+beta <- makecoef_imp(r, A)
+
+jpeg("coefmat.jpg")
+image(beta)
+dev.off()
+
+
+uini <- numeric(length = nrow(A))
+uini[1] <- 1
+uini[8] <- 1
+
+U <- difit(beta, uini, 24)
+
+print(rowSums(U))
+
+
+posid = expand.grid(y=1:5,x=1:5) %>% 
+  mutate(pos=row_number())
+
 dfU <- reshape2::melt(U) %>% 
-  setNames(c("time","num","density")) %>% 
-  mutate(jis_code = if_else(num<10,paste0("0",num),as.character(num))) %>% 
-  left_join(jpnprefs, by="jis_code") %>% 
-  mutate(nam=gsub("-k"," K", prefecture)) %>% 
-  left_join(gm_jpn, by="nam")
-
+  setNames(c("time","pos","density")) %>% 
+  left_join(posid, by="pos")
 dfU
-ggplot(dfU,aes(x=reorder(prefecture_kanji, num), y=density, group=time, colour=time))+
+
+
+
+ggplot(dfU,aes(x=x, y=density, group = time, colour=time))+
   geom_line()+
-  scale_colour_viridis_c()+
-  theme(axis.text.x = element_text(family="Osaka", angle=90, hjust=1))+
-  labs(x="")
-ggsave("diff_jp.png")
+  facet_grid(rows = vars(y))+
+  theme_bw(16)
 
-head(dfU)
+ggsave("xoriented.png")
+
+ggplot(dfU,aes(x=y, y=density, group = time, colour=time))+
+  geom_line()+
+  facet_grid(rows = vars(x))+
+  theme_bw(16)
+
+ggsave("yoriented.png")
+
+ggplot(dfU,aes(x=x, y=y, fill=density))+
+  geom_tile()+
+  facet_wrap(~time)+
+  scale_y_reverse()+
+  scale_fill_gradient(low="white", high="black")+
+  theme_bw(16)
+
+  ggsave("tiles.png")
 
 
-saveGIF({
-  for(i in 1:20){
-    p1 <- ggplot(dfU[dfU$time==i,], aes(geometry=geometry, fill=density)) +
-      geom_sf() + 
-      theme_minimal() +
-      theme(axis.text = element_blank(), axis.ticks = element_blank())+
-      facet_wrap(~time, labeller = label_both)+
-      scale_fill_gradient(low="white", high="royalblue", limits = c(0,1))
-    print(p1)
-  }
-})
+ggplot(dfU,aes(x=x, y=y, fill=density))+
+  geom_tile()+
+  scale_y_reverse()+
+  scale_fill_gradient(low="white", high="black")+
+  theme_bw(16)+
+  transition_time(time)+labs(title =  'time: {frame_time}')
 
+anim_save("tiles.gif")

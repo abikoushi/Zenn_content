@@ -1,68 +1,164 @@
 ---
-title: "尤度比検定, ワルド検定, スコア検定から定まる信頼区間：幾何分布の例"
+title: "尤度比検定, ワルド検定, スコア検定：幾何分布の例"
 emoji: "🚌"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [R, 信頼区間, 仮説検定]
+topics: [R, 仮説検定]
 published: false
 ---
 
-## 導入
+## 概要
 
 [尤度比検定, ワルド検定, スコア検定から定まる信頼区間：二項分布の例](https://zenn.dev/abe2/articles/lr_wald_score_binom)
 
 の続き的な内容．
 
-二項分布の例は教科書などにも比較的よく出ているので，あまり出てないであろう幾何分布でもやってみようというもの．
+二項分布の例は教科書にも比較的よく出ているので，あまり出てないであろう幾何分布でもやってみようというもの．
 
-こんな感じで自分でも好きな分布（モデル）で検定や信頼区間を作ってみようかなと思ってもらえたら望外の喜びである．
-
-## 幾何分布の紹介
+こんな感じで自分でも好きな分布（モデル）で検定や信頼区間を作ってみようかなと思ってもらえたら大変うれしい（……が，そのためには本当は解析的に解けないような場合の例も必要だと思う）．
 
 
+## 動機付けのための例
 
-## 地道手計算パート
+あるソーシャルゲーム（ソシャゲ）ではユーザーが1日あたりどのくらいの確率でログインしているか知りたいと思っている．
 
-### 準備
+マーケティングの分野では $t_n$ をリセンシー，$n$ をフリクエンシーとして，リセンシー・フリクエンシー・マネタリーバリュー（購買金額）をあわせて色々考えることをRFM分析と呼ぶ場合がある．
+
+幾何分布という用語にあまり馴染みのない方のため，これまで述べたことを再度図にまとめておく．
+
+ここではなるべくイメージが持ちやすいようにこのような例にしてみたが，以降特別ソシャゲの話題が出てくるわけではないので，医学データに興味のある人はログインの代わりに症状の再発とか，品質管理に興味のある人は部品の故障とか，自分の興味のある題材に読み替えてもらえると嬉しい．
+
+
+## 地道に手計算パート
 
 尤度に基づく方法を考える.
 
-モデルを
+上の設定のモデルで，尤度関数は
 
 $$
-X \sim \mathrm{Binomial}(n, \theta)
+L(p) = \left( \prod_{i=1}^n (1-p)^{t_i-t_{i-1}-1} p \right) ((1-p)^{w - t_n})
 $$
 
-とする.
+と書ける. 推定したい未知パラメータは $p \in [0,1]$ である.
 
-推定したい未知パラメータは $\theta \in [0,1]$ である.
-
-このときこのモデルの対数尤度関数は
+対数尤度関数を少し整理する．
 
 $$
-\ell(\theta) = X \log(\theta) + (1-X) \log(1-\theta) + \mathrm{Const.}
+\begin{aligned}
+\log L(p) &= \left( \sum_{i=1}^n (t_i-t_{i-1}-1)\log(1-p) + \log p \right) + (w - t_n)\log(1-p) \\
+& = \{(t_1-t_{0}-1)+(t_2-t_{1}-1)+ \cdots + (t_n-t_{n-1}-1) + (w - t_n)\}\log(1-p) + n \log p  \\
+&= (w-n) \log(1-p) + n \log p. 
+\end{aligned}
 $$
 
-と書ける. $\mathrm{Const.}$ は自由パラメータ $\theta$ に依存しない定数で微分すると消える.
+ここまで求めると，あとの尤度比検定・スコア検定・ワルド検定の導出は2項分布のときとまったく同じ計算になる．
 
-対数尤度関数をパラメータで1階微分した導関数をスコア関数と呼ぶ.
+[尤度比検定, ワルド検定, スコア検定から定まる信頼区間：二項分布の例](https://zenn.dev/abe2/articles/lr_wald_score_binom) の結果で $x$ を $n$ に，$n$ を $w$ に，$\theta$ を $p$ に置き換えればよい．
 
-スコア関数 $S(\theta)$ は
+置き換えるだけだが2つの記事を見比べるのが面倒かもしれなので，この記事の最後にまとめて書いておく．
 
-$$
-S(\theta) = \frac{d}{d\theta}\ell(\theta) = X/\theta - (1-X)/(1-\theta).
-$$
-
-これを0とおいて $\theta$ について解くことにより, 最尤推定量は
+最尤推定量は
 
 $$
-\hat \theta = X/n
+\hat p = n/w
 $$
 
 と求まる.
 
-さらに,　フィッシャー情報量を最尤推定量のサンプルサイズ $n$ の大きいときの分布（漸近分布）のために考えておく.
+改めて考えると，この問題は「$w$ 回の試行のうちログインした回数 $n$ の分布」を扱っているのと同じなので，これはあたりまえのことであった．
+
+また，尤度を計算するのには履歴 $t_i$ をすべてコンピュータ上のメモリに乗せる必要はなく，$w$ と $n$ がわかれば十分である．
+このような統計量を一般化すると十分統計量という考え方になる．
+
+
+## Rによる実装例とシミュレーション
+
+尤度比検定に基づく p 値を返す関数は例えば次のように書ける.
+
+```R
+LRtest <- function(p,x,n){
+  phat <- x/n
+  lp <- 2*(dbinom(x, n, phat ,log = TRUE)-
+             dbinom(x, n, p ,log = TRUE))
+  pchisq(lp, 1, lower.tail = FALSE)
+}
+```
+
+Wald 検定に基づく p 値を返す関数は例えば次のように書ける.
+
+```
+waldtest <- function(p,x,n){
+  phat <- x/n
+  se <- sqrt(phat*(1-phat)/n)
+  2*pnorm(abs(phat-p)/se, lower.tail = FALSE)
+}
+
+pv_w <- sapply(z, waldtest, x=x, n=n)
+df_w <- data.frame(p=z, pv=pv_w, method="Wald")
+
+```
+
+`abs` で絶対値を取って片側だけ計算しているので2倍している.
+
+スコア検定に基づく. このことは次のように確かめられる.
+
+
+```r
+set.seed(1234)
+res_p <- prop.test(x, n, p = 0.5, correct = FALSE, conf.level = 0.95)
+
+CI_score <- function(x, n, level){
+  z <- qnorm(0.5*(1-level), lower.tail = FALSE)
+  phat <- x/n
+  t_1 <- phat+(z^2)/(2*n)
+  t_2 <- z*sqrt(z^2/(4*n^2)+phat*(1-phat)/n)
+  c((t_1 - t_2)/(1+(z^2)/n),
+    (t_1 + t_2)/(1+(z^2)/n))  
+}
+
+
+print(CI_score(x,n,0.95))
+print(res_p$conf.int)
+```
+
+```r
+> print(CI_score(x,n,0.95))
+[1] 0.2581979 0.6579147
+> print(res_p$conf.int)
+[1] 0.2581979 0.6579147
+attr(,"conf.level")
+[1] 0.95
+```
+
+ p 値を 3 つの検定で比較してみよう.
+
+
+
+
+
+Rのコード全体はこちら：
+
+https://github.com/abikoushi/Zenn_content/blob/28b54a4fa9641c360d8df0fb285b29e8d5b9f78c/R/lr_wald_score_geom.R
+
+
+
+
+## 尤度比検定, ワルド検定, スコア検定の導出
+
+### 準備
+
+最尤推定量のサンプルサイズ $n$ の大きいときの分布（漸近分布）を知るために，フィッシャー情報量を考えておく.
 
 フィッシャー情報量 $I(\theta)$ は対数尤度関数の2階微分の期待値の符号反転である.
+
+未知パラメータで1階微分した導関数をスコア関数と呼ぶ.
+
+スコア関数 $S(\theta)$ は
+
+$$
+S(p) = \frac{d}{dp}\log L(p) = .
+$$
+
+フィッシャー情報量は
 
 $$
 \begin{align*}
@@ -175,152 +271,3 @@ C_{+} = (1+\frac{z_{\alpha/2}}{n})^{-1} \left( \hat \theta + \frac{z_{\alpha/2}^
 $$
 
 とした.
-
-
-## Rによる実装例
-
-### 尤度比検定
-
-尤度比検定に基づく p 値を返す関数は例えば次のように書ける.
-
-```R
-LRtest <- function(p,x,n){
-  phat <- x/n
-  lp <- 2*(dbinom(x, n, phat ,log = TRUE)-
-             dbinom(x, n, p ,log = TRUE))
-  pchisq(lp, 1, lower.tail = FALSE)
-}
-```
-
-信頼区間は閉じた形では求まらなかったがせっかくコンピュータを使うので帰無仮説を動かして総当たり（0.005刻み）で p 値を計算してみよう.
-
-```r
-set.seed(123)
-n <- 20
-x <- rbinom(1, n, 0.5)
-print(x)
-# [1] 9
-
-z <- seq(0.01, 0.99, by=0.005)
-pv_lr <- sapply(z, LRtest, x=x, n=n)
-df_lr <- data.frame(p=z, pv=pv_lr, method="LR")
-
-library(ggplot2)
-ggplot(df_lr, aes(x=p, y=pv))+
-  geom_line()+
-  theme_bw(18)+labs(x="param.", y="p-value")
-
-```
-
-![](/images/lr_wald_score/pfun_lr0.png)
-
-
-このグラフを例えば 0.05 の高さで切ってやれば95%信頼区間が求まる.
-
-実は数値的に解くのはさほど大変ではない.
-
-こんなふうだ:
-
-```r
-library(rootSolve)
-sol <- uniroot.all(function(p)LRtest(p,x,n)-0.05, c(0.1,0.8)) #0になる点を求める
-print(sol)
-#[1] 0.2479710 0.6641676
-ggplot(df_lr, aes(x=p, y=pv))+
-  geom_line()+
-  geom_errorbarh(data = NULL, aes(xmin=sol[1], xmax=sol[2], y=0.05), height=0.03, colour="cornflowerblue")+
-  theme_bw(18)+labs(x="param.", y="p-value")
-
-```
-
-![](/images/lr_wald_score/pfun_lr.png)
-
-
-### Wald 検定
-
-
- Wald 検定に基づく p 値を返す関数は例えば次のように書ける.
-
-```
-waldtest <- function(p,x,n){
-  phat <- x/n
-  se <- sqrt(phat*(1-phat)/n)
-  2*pnorm(abs(phat-p)/se, lower.tail = FALSE)
-}
-
-pv_w <- sapply(z, waldtest, x=x, n=n)
-df_w <- data.frame(p=z, pv=pv_w, method="Wald")
-
-```
-
-`abs` で絶対値を取って片側だけ計算しているので2倍している.
-
-
-### スコア検定
-
-R の `prop.test` はスコア検定に基づく. このことは次のように確かめられる.
-
-
-```r
-set.seed(1234)
-res_p <- prop.test(x, n, p = 0.5, correct = FALSE, conf.level = 0.95)
-
-CI_score <- function(x, n, level){
-  z <- qnorm(0.5*(1-level), lower.tail = FALSE)
-  phat <- x/n
-  t_1 <- phat+(z^2)/(2*n)
-  t_2 <- z*sqrt(z^2/(4*n^2)+phat*(1-phat)/n)
-  c((t_1 - t_2)/(1+(z^2)/n),
-    (t_1 + t_2)/(1+(z^2)/n))  
-}
-
-
-print(CI_score(x,n,0.95))
-print(res_p$conf.int)
-```
-
-```r
-> print(CI_score(x,n,0.95))
-[1] 0.2581979 0.6579147
-> print(res_p$conf.int)
-[1] 0.2581979 0.6579147
-attr(,"conf.level")
-[1] 0.95
-```
-
-帰無仮説を動かしたときの p 値を 3 つの検定で比較してみよう.
-
-```r
-pv_p <- sapply(z, function(p)prop.test(x, n, p = p, correct = FALSE)$p.value)
-df_p <- data.frame(p=z, pv=pv_p, method="score")
-df_pv <- rbind(df_lr,df_w,df_p)
-ggplot(data = df_pv, aes(x=p, y=pv, colour=method, group = method, linetype=method))+
-  geom_line()+
-  scale_color_brewer(palette = "Set2")+
-  theme_bw(16)+
-  labs(x="param.", y="p-value", colour="method", linetype="method")
-ggsave("proptest.png")
-```
-
-![](/images/lr_wald_score/proptest.png)
-
-
-より大きい p 値が出やすい検定がより広い信頼区間を与える.
-
-これだけではどの検定が良い検定かはまだわからない（次の記事に続く予定…）.
-
-しかし p 値が計算できれば検定も区間推定もできることがわかった.
-
-Rのコード全体はこちら：
-
-https://github.com/abikoushi/Zenn_content/blob/28b54a4fa9641c360d8df0fb285b29e8d5b9f78c/R/lr_wald_score.R
-
-
-検定と信頼区間をつなぐp値：多重比較を例に
-多重比較補正されたp値から定まる信頼区間
-ベイズ信頼区間から定まるp値
-階層モデルの p値
-
-
-
-
