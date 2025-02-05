@@ -169,6 +169,6 @@ print(rowSums(U))
 ![](/images/diffeq_onthe_graph/yoriented.png)
 
 
-最後に使用したRのコード全体はこちら：
+最後に，使用したRのコード全体はこちら：
 
-https://github.com/abikoushi/Zenn_content/blob/28b54a4fa9641c360d8df0fb285b29e8d5b9f78c/R/diffusion_onthe_graph.R
+https://github.com/abikoushi/Zenn_content/blob/main/R/diffusion_onthe_graph.R
