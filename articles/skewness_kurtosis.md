@@ -195,7 +195,7 @@ plot!(x->pdf(E1,x), 0,4, label="Exponential", linestyle=:dash,tick_direction=:ou
 ```julia
 outE11 = simCLT(E1,  10, 10000)
 h = histogram(outE11, legend=false, normalize=:pdf, color="lightgray")
-plot!(h, x->pdf(Normal(),x), color="royalblue")
+plot!(h, x->pdf(Normal(),x), color=col1[1])
 ```
 
 ![](/images/skewness_kurtosis/hist3.png)
@@ -205,7 +205,7 @@ $n=100 ~(=10^2)$ くらいまで大きくすると近づいてくる．
 ```julia
 outE12 = simCLT(E1, 100, 10000)
 h = histogram(outE12, legend=false, normalize=:pdf, color="lightgray")
-plot!(h, x->pdf(Normal(),x), color="royalblue")
+plot!(h, x->pdf(Normal(),x), color=col1[1])
 ```
 
 ![](/images/skewness_kurtosis/hist4.png)

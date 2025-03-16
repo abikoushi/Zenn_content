@@ -53,12 +53,12 @@ png(p, "density2.png")
 
 
 
-outE11 = simCLT(E1,  10, 10000)
+@time outE11 = simCLT(E1,  10, 10000)
 h = histogram(outE11, legend=false, normalize=:pdf, color="lightgray")
-plot!(h, x->pdf(Normal(),x), color="royalblue")
+plot!(h, x->pdf(Normal(),x), color=col1[1])
 png(h, "hist3.png")
 
-outE12 = simCLT(E1, 100, 10000)
+@time outE12 = simCLT(E1, 100, 10000)
 h = histogram(outE12, legend=false, normalize=:pdf, color="lightgray")
-plot!(h, x->pdf(Normal(),x), color="royalblue")
+plot!(h, x->pdf(Normal(),x), color=col1[1])
 png(h, "hist4.png")
