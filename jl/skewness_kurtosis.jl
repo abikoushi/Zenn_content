@@ -3,33 +3,62 @@ using Random
 using Statistics
 using Plots
 
-G1 = Gamma(7,1)
-X = rand(G1, 100)
-Y = X .+ 10
-p = histogram(X, legend=false, alpha=0.5)
-histogram!(p, Y, alpha=0.5)
-plot(p)
+N0 = Normal(0,1)
+skewness(N0)
+kurtosis(N0)
 
-G2 = Gamma(0.8,1)
-skewness(G1)
-kurtosis(G1)
-skewness(G2)
-kurtosis(G2)
+U1 = Uniform(-1,1)
+skewness(U1)
+kurtosis(U1)
 
-function simCLT(dist, iter, size)
+L1 = Logistic(0,1)
+skewness(L1)
+kurtosis(L1)
+
+p = plot(x -> pdf(N0,x), -4, 4, tick_direction=:out, label="Normal", linestyle=:solid)
+plot!(p, x -> pdf(U1,x), label="Uniform", linestyle=:dash)
+plot!(p, x -> pdf(L1,x), label="Logistic", linestyle=:dot)
+png(p, "density1.png")
+
+function simCLT(dist, size, iter)
     out = zeros(iter)
     rng = Random.default_rng()
     for i in 1:iter
         X = rand(rng, dist, size)
-        out[i] = mean(X .- mean(dist)) * sqrt(size)/std(dist)
+        out[i] = (mean(X) - mean(dist)) * sqrt(size)/std(dist)
     end
      return out
 end
 
-out1 = simCLT(G1, 10000, 10)
-h = histogram(out1, legend=false, normalize=:pdf, color="lightgray")
-plot!(h, x->pdf(Normal(),x), color="royalblue")
+col1 = palette(:default)[1:3]
+@time outU1 = simCLT(U1, 10, 10000)
+h = histogram(outU1, legend=false, normalize=:pdf, color="lightgray", tick_direction=:out)
+plot!(h, x->pdf(Normal(),x), linewidth=2, color=col1[1])
+png(h, "hist1.png")
 
-out2 = simCLT(G2, 10000, 10)
-h = histogram(out2, legend=false, normalize=:pdf, color="lightgray")
+
+@time outL1 = simCLT(L1, 10, 10000)
+h = histogram(outL1, legend=false, normalize=:pdf, color="lightgray", tick_direction=:out)
+plot!(h, x->pdf(Normal(),x),  linewidth=2, color=col1[1])
+png(h, "hist2.png")
+
+E1 = Exponential(1)
+
+skewness(E1) #2.0
+kurtosis(E1) #6.0
+
+p = plot(x -> pdf(N0,x), -4, 4, tick_direction=:out, label="Normal", linestyle=:solid)
+plot!(x->pdf(E1,x), 0,4, label="Exponential", linestyle=:dash,tick_direction=:out)
+png(p, "density2.png")
+
+
+
+outE11 = simCLT(E1,  10, 10000)
+h = histogram(outE11, legend=false, normalize=:pdf, color="lightgray")
 plot!(h, x->pdf(Normal(),x), color="royalblue")
+png(h, "hist3.png")
+
+outE12 = simCLT(E1, 100, 10000)
+h = histogram(outE12, legend=false, normalize=:pdf, color="lightgray")
+plot!(h, x->pdf(Normal(),x), color="royalblue")
+png(h, "hist4.png")
