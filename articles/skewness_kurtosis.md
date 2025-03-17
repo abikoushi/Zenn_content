@@ -125,7 +125,7 @@ kurtosis(N0) #0
 
 ```julia
 U1 = Uniform(-1,1)
-skewness(U1) c
+skewness(U1) #0.0
 kurtosis(U1) #-1.2
 
 L1 = Logistic(0,1)
@@ -157,7 +157,7 @@ end
 
 ```julia
 col1 = palette(:default)[1:3]
-@time outU1 = simCLT(U1, 10, 10000)
+outU1 = simCLT(U1, 10, 10000)
 h = histogram(outU1, legend=false, normalize=:pdf, color="lightgray", tick_direction=:out)
 plot!(h, x->pdf(Normal(),x), linewidth=2, color=col1[1])
 ```
