@@ -8,8 +8,16 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Zenn のコンテンツ管理用リポジトリです。",
   "dependencies": {
-    "zenn-cli": "^0.1.158"
-  }
+    "zenn-cli": "^0.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abikoushi/Zenn_content.git"
+  },
+  "bugs": {
+    "url": "https://github.com/abikoushi/Zenn_content/issues"
+  },
+  "homepage": "https://github.com/abikoushi/Zenn_content#readme"
 }
