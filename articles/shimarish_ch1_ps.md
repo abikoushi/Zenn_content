@@ -81,6 +81,8 @@ $$
 X = matrix(c(58, 22,
              62, 38), byrow = TRUE, nrow = 2, ncol = 2)
 print(X)
+x = X[,1]
+n = rowSums(X)
 ####
 #「差がない」とした推定値で求めた標準誤差
 phat = x/n
