@@ -7,3 +7,8 @@ Zenn のコンテンツ管理用リポジトリです。
 ## 自分用メモ
 
 * [📘 How to use Zenn CLI](https://zenn.dev/zenn/articles/zenn-cli-guide)
+
+```
+# 記事のURLの一部となるslugを指定して作成することもできます。
+$ npx zenn new:article --slug my-awesome-article
+```
