@@ -3,7 +3,7 @@ title: "Distributions.jl を利用して確率分布を宣言する（一般化�
 emoji: "⛑️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [Julia, R]
-published: false
+published: true
 ---
 
 ## 主にやったこと
@@ -69,7 +69,15 @@ GG.loggeommean(ggdist1) #0.8455686701969344
 
 ## 付録：一般化ガンマ分布の期待値，対数の期待値
 
-確率変数 $X$ が一般化ガンマ分布に従うことを $X \sim \mathrm{GG}(a, b, k)$ と書くことにする. $X \sim \mathrm{GG}(a, 1, k)$ の場合の期待値 $E[X]$ を定義通り計算すると次のようになる．
+確率変数 $X$ が一般化ガンマ分布に従うことを $X \sim \mathrm{GG}(a, b, k)$ と書くことにする. $X \sim \mathrm{GG}(a, 1, k)$ の場合の期待値 $E[X]$ を定義通り計算する．
+
+準備としてガンマ関数の定義を確認する．
+
+$$
+\Gamma(z) = \int^{\infty}_{0} t^{z-1}\exp(-t) \, dt
+$$
+
+である. 期待値は次のようになる．
 
 $$
 \begin{aligned}
@@ -90,15 +98,7 @@ $$
 E[X]=b\frac{\Gamma((a+1)/k)}{\Gamma(a/k)}
 $$
 
-いま, $X$ の自然対数をとった確率変数 $\log X$ の期待値 $E[\log X]$ を求めたい（そういうのを求めたい状況がたまにある）.
-
-その準備としてガンマ関数の定義を確認する．
-
-$$
-\Gamma(z) = \int^{\infty}_{0} t^{z-1}\exp(-t) \, dt
-$$
-
-である. $u = \log(t)$ と変数変換すると， $du = dt/t$ より, ガンマ関数は，次のように書ける.
+次に, $X$ の自然対数をとった確率変数 $\log X$ の期待値 $E[\log X]$ を求めたい（そういうのを求めたい状況がたまにある）. $u = \log(t)$ と変数変換すると， $du = dt/t$ より, ガンマ関数は，次のように書ける.
 
 $$
 \Gamma(z) = \int^{\infty}_{-\infty} \exp(uz-\exp(u)) \, du
