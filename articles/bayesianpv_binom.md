@@ -98,14 +98,15 @@ print(p1)
 - [尤度比検定, ワルド検定, スコア検定から定まる信頼区間：二項分布の例](https://zenn.dev/abe2/articles/lr_wald_score_binom)
 - [R の exact test についてのノート](https://zenn.dev/abe2/articles/exact_tests_r)
 
-に示した尤度比検定（LR）, ワルド検定（wald）, スコア検定（score）と2項検定（exact）も合わせていくつかプロットしてみよう．
+に示した尤度比検定（LR）, ワルド検定（wald）, スコア検定（score）と2項検定（exact）も合わせていくつかプロットしてみよう．$x$ を 1 から n-1 まで動かしている．
 
 ![](/images/bayesianpv_binom/pvalfun1.gif)
 
 ![](/images/bayesianpv_binom/pvalfun2.gif)
 
-![](/images/bayesianpv_binom/pvalfun2.gif)
+![](/images/bayesianpv_binom/pvalfun3.gif)
 
+このように出発点の考え方が違っても $n$ が大きいときは似た結果が得られるというのは数理的なことを学ぶ上でおもしろいことの一つだと思う．
 
 コードの全体はこちら：
 
