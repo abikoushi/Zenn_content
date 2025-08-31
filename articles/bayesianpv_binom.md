@@ -3,7 +3,7 @@ title: "ベイズ信頼区間からP値の類似物を作る（2項分布の例�
 emoji: "🙆"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [R, 統計学]
-published: false
+published: true
 ---
 
 ## 前置き
@@ -93,12 +93,12 @@ print(p1)
 
 ここでは $x=6$, $n=10$ とした．
 
-ジェフリーズ事前分布のほかに平坦事前分布（flat prior） $a=1$, $b=1$ もよく使われる．これと，
+ジェフリーズ事前分布のほかに平坦事前分布（flat prior） $a=1$, $b=1$ もよく使われる．これらと，
 
 - [尤度比検定, ワルド検定, スコア検定から定まる信頼区間：二項分布の例](https://zenn.dev/abe2/articles/lr_wald_score_binom)
 - [R の exact test についてのノート](https://zenn.dev/abe2/articles/exact_tests_r)
 
-に示した尤度比検定（LR）, ワルド検定（wald）, スコア検定（score）と2項検定（exact）も合わせていくつかプロットしてみよう．$x$ を 1 から n-1 まで動かしている．
+に示した尤度比検定（LR）, ワルド検定（Wald）, スコア検定（score）と2項検定（exact）も合わせていくつかプロットしてみよう．$x$ を 1 から $n-1$ まで動かしている．
 
 ![](/images/bayesianpv_binom/pvalfun1.gif)
 
