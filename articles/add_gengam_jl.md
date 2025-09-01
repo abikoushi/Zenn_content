@@ -8,7 +8,7 @@ published: true
 
 ## 主にやったこと
 
-次の分布関数 $f(x;a,b,k)$ を持つ確率分布を一般化ガンマ分布（[Generalized gamma distribution - wikipedia](https://en.wikipedia.org/wiki/Generalized_gamma_distribution)）という.
+次の分布関数 $F(x;a,b,k)$ を持つ確率分布を一般化ガンマ分布（[Generalized gamma distribution - wikipedia](https://en.wikipedia.org/wiki/Generalized_gamma_distribution)）という.
 
 $$
 F(x; a, b, k) = \frac{\gamma(a/k, (x/b)^k)}{\Gamma(a/k)}, \quad x > 0. \tag{1}
