@@ -385,7 +385,13 @@ simfunc <- function(p_true, p_test, n, iter){
 
 二項分布のパラメータの信頼区間については，尤度比検定やワルド検定よりはスコア検定から得られる信頼区間が良さそうなことがわかった．
 
-
 シミュレーションについてのRのコードはこちら：
 
 https://github.com/abikoushi/Zenn_content/blob/main/R/lr_wald_score_sim.R
+
+
+ちなみに，ここで行ったシミュレーションに近い結果が，
+
+[Alan Agresti, Brent A. Coull. (1998). Approximate Is Better than "Exact" for Interval Estimation of Binomial Proportions. The American Statistician, 52(2) , pp. 119-126.](https://www.jstor.org/stable/2685469)
+
+にも見られる．
