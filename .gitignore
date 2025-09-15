@@ -2,3 +2,7 @@
 .Rproj.user
 .Rhistory
 *.rds
+tex/*/*.synctex.gz
+tex/*/*.aux
+tex/*/*.log
+tex/*/*.pdf

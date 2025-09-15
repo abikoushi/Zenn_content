@@ -1,0 +1,14 @@
+\documentclass[tikz, border=14pt]{standalone}
+\usepackage{tikz}
+\usepackage{mathtools}
+\usetikzlibrary{bayesnet}
+\begin{document}
+\begin{tikzpicture}
+    \node[const] (x) {$x$};
+    \node[const, above right = of x] (z) {$z$};
+    \node[const, below right = of z] (y) {$y$};
+    \edge{x}{y};
+    \edge{z}{y};
+    \edge{x}{z};
+\end{tikzpicture}
+\end{document}
