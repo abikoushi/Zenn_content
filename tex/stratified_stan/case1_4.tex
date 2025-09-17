@@ -2,7 +2,6 @@
 \usepackage{tikz}
 \usepackage{mathtools}
 \usetikzlibrary{bayesnet}
-\usetikzlibrary{fit}
 \begin{document}
 \begin{tikzpicture}
     \node[obs] (x) {$x$};
@@ -18,13 +17,16 @@
     \node[latent, below right = of z2] (y2) {$y^{\mathrlap{\ast}}$};
     \edge{x2}{y2};
     \edge{z2}{y2};
-    \node [draw, dashed,  fit=(x2)(y2)(z2)] {};
     
-    \node[latent, left = of x] (psi) {$\psi$}; 
+    \node[latent,  above left = of x] (psi) {$\psi$}; 
     \node[latent, above right = of z] (gamma) {$\gamma$};
     \node[latent, below right = of y] (xi) {$\xi$};
     \edge{xi}{y,y2};
-    \edge{gamma}{z, z2};
+    \edge{gamma}{z};
     \edge{psi}{x};
+    
+    \node[latent, above = of gamma] (phi) {$\phi$};
+    \edge{psi,gamma}{phi};
+    \edge{phi}{z2};
 \end{tikzpicture}
 \end{document}

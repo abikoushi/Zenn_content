@@ -6,3 +6,5 @@ tex/*/*.synctex.gz
 tex/*/*.aux
 tex/*/*.log
 tex/*/*.pdf
+stan/startified_stan/*
+!stan/startified_stan/*.*
