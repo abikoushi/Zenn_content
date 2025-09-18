@@ -1,3 +1,4 @@
+//case1.stan
 data{
   int N;
   array[N] int<lower=0,upper=1> Y;

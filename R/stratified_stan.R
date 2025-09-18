@@ -1,4 +1,3 @@
-# we recommend running this in a fresh R session or restarting your current session
 #install.packages("cmdstanr", repos = c('https://stan-dev.r-universe.dev', getOption("repos")))
 library(ggplot2)
 library(dplyr)
@@ -130,13 +129,15 @@ check_cmdstan_toolchain()
 PATH_TO_CMDSTAN = cmdstan_path()
 set_cmdstan_path(PATH_TO_CMDSTAN)
 
-mod1 <- cmdstan_model("./Documents/R/case1.stan")
-mod2 <- cmdstan_model("./Documents/R/case2.stan")
+mod1 <- cmdstan_model("./stan/stratified_stan/case1.stan")
+mod2 <- cmdstan_model("./stan/stratified_stan/case2.stan")
 
 set.seed(1234)
 dat = rand_case1(n = 500, xi = Xi, psi = PX_z$p, gamma = PZ$p)
 # names correspond to the data block in the Stan program
-data_list <- list(N = nrow(dat), Y = dat$Y, X=dat$X, Z=dat$Z, alpha=1)
+data_list <- list(N = nrow(dat),
+                  Y = dat$Y, X=dat$X, Z=dat$Z,
+                  alpha=1)
 
 fit1 <- mod1$sample(
   data = data_list,
@@ -159,18 +160,18 @@ fit2 <- mod2$sample(
 )
 
 
-
-p_tr1 = mcmc_trace(fit1$draws(c("lp__","Xi","psi","phi","delta","gamma")))+
+parnames = c("lp__","Xi","psi","phi","delta","gamma")
+p_tr1 = mcmc_trace(fit1$draws(parnames))+
   ggtitle("case 1")+theme_bw()
-p_tr2 = mcmc_trace(fit2$draws(c("lp__","Xi","psi","phi","delta","gamma")))+
+p_tr2 = mcmc_trace(fit2$draws(parnames))+
   ggtitle("case 2")+theme_bw()
 p_tr = p_tr1 / p_tr2
 print(p_tr)
-
+ggsave(filename = "traceplot.png", plot = p_tr, width = 10, height = 8)
 
 df_par = bind_rows(
-  mutate(reshape2::melt(fit1$draws()), model=1), 
-  mutate(reshape2::melt(fit2$draws()), model=2) ) %>% 
+  mutate(reshape2::melt(fit1$draws(parnames)), model=1), 
+  mutate(reshape2::melt(fit2$draws(parnames)), model=2) ) %>% 
   mutate(model = factor(model))
 
 p_ecdf = ggplot(df_par, aes(x=value, colour = model, linetype = model))+
@@ -185,7 +186,6 @@ fit2$summary()
 
 #Xihat = matrix(fit1$summary("Xi", c("mean","sd"))$mean, 2, 2)
 
-
 summary1 = fit1$summary(c("Xi","psi","phi","delta","gamma"), c("mean","sd"))
 summary2 = fit2$summary(c("Xi","psi","phi","delta","gamma"), c("mean","sd"))
 
@@ -198,5 +198,5 @@ rbind(
 ) %>% kable(digits = 2)
   
 
-ATE_case1(xi = Xi, psi=PX_z$p, gamma=PZ$p)
-ATE_case2(xi = Xi, phi=PZ_x$p, delta=PX$p)
+print(round(ATE_case1(xi = Xi, psi=PX_z$p, gamma=PZ$p),3))
+print(round(ATE_case2(xi = Xi, phi=PZ_x$p, delta=PX$p),3))

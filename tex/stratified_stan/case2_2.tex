@@ -17,7 +17,8 @@
     \node[latent, below right = of z2] (y2) {$y^{\mathrlap{\ast}}$};
     \edge{x2}{y2};
     \edge{z2}{y2};
-     \edge{x2}{z2};
+    \edge{x2}{z2};
+    \node [draw, dashed,  fit=(x2)(y2)(z2)] {};
         
     \node[latent, left = of x] (delta) {$\delta$}; 
     \node[latent, above right = of z] (phi) {$\phi$};
