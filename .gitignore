@@ -6,5 +6,5 @@ tex/*/*.synctex.gz
 tex/*/*.aux
 tex/*/*.log
 tex/*/*.pdf
-stan/startified_stan/case1$
-stan/startified_stan/case2$
+stan/stratified_stan/case1$
+stan/stratified_stan/case2$
