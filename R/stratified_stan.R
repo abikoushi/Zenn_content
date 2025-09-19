@@ -12,7 +12,6 @@ df_prob = expand.grid(y=0:1, x=0:1, z=0:1) %>%
   mutate(p = c(0.2,0.05,0.2,0.2,0.05,0.245,0.005,0.05))
 kable(df_prob, digits = 3)
 
-
 rand_case1 = function(n, xi, psi, gamma){
   ## draw x given by z
   z = rbinom(n, 1, gamma)
@@ -112,7 +111,7 @@ tab2 = group_by(dat2,Y,X,Z) %>%
   mutate(p=n/sum(n)) %>% 
   arrange(Z,X,Y)
 
-kable(cbind(df_prob, "rand_case1" = tab1$p, "rand2_case"=tab2$p),
+kable(cbind(df_prob, "rand_case1" = tab1$p, "rand_case2"=tab2$p),
       digits=3)
 
 loglik_case1(y = dat1$Y, z = dat1$Z, x=dat1$Z,
@@ -183,9 +182,8 @@ p_ecdf = ggplot(df_par, aes(x=value, colour = model, linetype = model))+
 print(p_ecdf)
 ggsave(filename = "param_ecdf.png", plot = p_ecdf, width = 14, height = 8)
 
-fit1$summary()
-fit2$summary()
-
+# fit1$summary()
+# fit2$summary()
 #Xihat = matrix(fit1$summary("Xi", c("mean","sd"))$mean, 2, 2)
 
 summary1 = fit1$summary(c("Xi","psi","phi","delta","gamma"), c("mean","sd"))
@@ -202,3 +200,30 @@ rbind(
 
 print(round(ATE_case1(xi = Xi, psi=PX_z$p, gamma=PZ$p),3))
 print(round(ATE_case2(xi = Xi, phi=PZ_x$p, delta=PX$p),3))
+
+###
+#MLE
+crosstab = group_by(dat, Y,X,Z) %>% 
+  tally() %>% 
+  ungroup() %>% 
+  mutate(p = n/sum(n))
+
+PY_x_est = group_by(crosstab, X) %>% 
+  summarise(p = sum(Y*p)/sum(p))
+
+PY_xz_est = group_by(crosstab, X, Z) %>% 
+  summarise(p = sum(Y*p)/sum(p))
+
+PX_z_est = group_by(crosstab,  Z) %>% 
+  summarise(p = sum(X*p)/sum(p))
+
+PZ_x_est = group_by(crosstab,  X) %>% 
+  summarise(p = sum(Z*p)/sum(p))
+
+PX_est = summarise(crosstab, p = sum(X*p)/sum(p))
+PZ_est = summarise(crosstab, p = sum(Z*p)/sum(p))
+
+Xihat = matrix(PY_xz_est$p, 2, 2)
+
+print(round(ATE_case1(xi = Xihat, psi=PX_z_est$p, gamma=PZ_est$p),3))
+print(round(ATE_case2(xi = Xihat, phi=PZ_x_est$p, delta=PX_est$p),3))
