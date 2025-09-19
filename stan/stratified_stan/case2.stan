@@ -1,4 +1,4 @@
-//case.stan
+//case2.stan
 data{
   int N;
   array[N] int<lower=0,upper=1> Y;
@@ -30,12 +30,14 @@ generated quantities{
   psi[1] = (1-phi[2])*delta/(1-gamma);
   psi[2] = phi[2]*delta/gamma;
   {
+    //case1.stan
     int Zast = bernoulli_rng(gamma)+1;
     int Yast0 = bernoulli_rng(Xi[Zast,1]);
     int Yast1 = bernoulli_rng(Xi[Zast,2]);
     D1 = Yast1 - Yast0;
   }
   {
+    //case2.stan
     int Yast0;
     int Yast1;
     int Zast0;

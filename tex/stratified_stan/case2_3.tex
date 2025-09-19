@@ -4,7 +4,14 @@
 \usetikzlibrary{bayesnet}
 \begin{document}
 \begin{tikzpicture}
-    \node[const] (x) {$x$};
+\tikzset{
+    treat/.style = {
+    draw = black,
+        shape = rectangle,
+        inner sep = 1pt
+    }
+    }
+    \node[treat] (x) {$x$};
     \node[const, above right = of x] (z) {$z$};
     \node[const, below right = of z] (y) {$y$};
     \edge{x}{y};

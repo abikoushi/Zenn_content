@@ -10,7 +10,7 @@ library(cmdstanr)
 
 df_prob = expand.grid(y=0:1, x=0:1, z=0:1) %>%
   mutate(p = c(0.2,0.05,0.2,0.2,0.05,0.245,0.005,0.05))
-kable(df_prob)
+kable(df_prob, digits = 3)
 
 
 rand_case1 = function(n, xi, psi, gamma){
@@ -103,7 +103,7 @@ tab1 = group_by(dat1,Y,X,Z) %>%
   ungroup() %>% 
   mutate(p=n/sum(n)) %>% 
   arrange(Z,X,Y)
-tab1
+
 
 dat2 = rand_case2(n = 10000, xi = Xi, phi = PZ_x$p, delta = PX$p)
 tab2 = group_by(dat2,Y,X,Z) %>% 
@@ -111,7 +111,9 @@ tab2 = group_by(dat2,Y,X,Z) %>%
   ungroup() %>% 
   mutate(p=n/sum(n)) %>% 
   arrange(Z,X,Y)
-tab2
+
+kable(cbind(df_prob, "rand_case1" = tab1$p, "rand2_case"=tab2$p),
+      digits=3)
 
 loglik_case1(y = dat1$Y, z = dat1$Z, x=dat1$Z,
              xi = Xi, psi = PX_z$p, gamma = PZ$p)

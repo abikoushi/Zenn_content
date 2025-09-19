@@ -7,9 +7,9 @@ data{
   real<lower=0> alpha;
 }
 parameters{
-    matrix<lower=0, upper=1>[2,2] Xi;
-    vector<lower=0, upper=1>[2] psi;
-    real<lower=0, upper=1> gamma;
+  matrix<lower=0, upper=1>[2,2] Xi;
+  vector<lower=0, upper=1>[2] psi;
+  real<lower=0, upper=1> gamma;
 }
 model{
   for(i in 1:N){
@@ -30,12 +30,14 @@ generated quantities{
   phi[1] = (1-psi[2])*gamma/(1-delta);
   phi[2] = psi[2]*gamma/delta;
   {
+    //case1.stan
     int Zast = bernoulli_rng(gamma)+1;
     int Yast0 = bernoulli_rng(Xi[Zast,1]);
     int Yast1 = bernoulli_rng(Xi[Zast,2]);
     D1 = Yast1 - Yast0;
   }
   {
+    //case2.stan
     int Yast0;
     int Yast1;
     int Zast0;
