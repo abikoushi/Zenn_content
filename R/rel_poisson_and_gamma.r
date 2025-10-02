@@ -88,7 +88,7 @@ X = sim_count(100000, Ti)
 tab = table(X)
 ran = range(X)
 png("simcount.png",width = 500, height = 500)
-plot(tab/sum(tab), ylab="Probability")
+plot(tab/sum(tab), ylab="Probability", xlab = "counts")
 points(ran[1]:ran[2], dpois(ran[1]:ran[2], Ti), type="o", col="royalblue", lwd=2, lty=3)
 dev.off()
 
