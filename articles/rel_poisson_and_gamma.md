@@ -148,7 +148,7 @@ sim_count = function(iter, tau){
 
 ## 手計算してみる
 
-(1) の右辺を $G(r)$ とおく．
+(1) の左辺を $G(r)$ とおく．
 
 $$
 G(r) = \sum_{j \ge x} \frac{ (r T)^{j} \exp(-r T)}{j!}
