@@ -1,3 +1,4 @@
+library(dqrng)
 n = 10L
 k = 4L
 p = 0.6
@@ -66,7 +67,12 @@ legend("topright", legend = c("poisson.test","Bayesian"), lty=1, col=c("black","
 dev.off()
 ####
 
-simorderstat_unif <- function(iter, k, n, p){
+####
+set.seed(1234)
+x = runif(10)
+stripchart(x)
+
+simorderstat_unif <- function(iter, k, p, n){
   res_p = numeric(iter)
   res_k = integer(iter)
   for(it in seq_len(iter)){
@@ -76,3 +82,21 @@ simorderstat_unif <- function(iter, k, n, p){
   }
   return(data.frame(waitingtime=res_p, counts=res_k))
 }
+
+
+n = 10L
+k = 4L
+p = 0.6
+set.seed(1016)
+res_sim = simorderstat_unif(100000, k, p, n)
+tab = table(res_sim$counts)
+ran = range(res_sim$counts)
+png("simcount_binom.png", width = 500, height = 500)
+plot(tab/sum(tab), ylab="Probability", xlab = "counts")
+points(ran[1]:ran[2], dbinom(ran[1]:ran[2], n, p), type="o", col="royalblue", lwd=2, lty=3)
+dev.off()
+
+png("simtime_beta.png",width = 500, height = 500)
+hist(res_sim$waitingtime, breaks = "scott", freq = FALSE, main="", xlab = "waiting time", border = "lightgrey")
+curve(dbeta(x, k, 10-k+1), col="royalblue", add=TRUE, lwd=2, lty=2)
+dev.off()
