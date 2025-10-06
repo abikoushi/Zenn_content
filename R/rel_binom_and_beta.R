@@ -45,7 +45,7 @@ ci_b = c(qbeta(0.025, shape1 = k+1, shape2 = n-k+1),
          qbeta(0.975, shape1 = k+1, shape2 = n-k+1))
 
 png("pvfun_binom1.png", width = 500, height = 500)
-curve(pvfun(x,k,n), 0, 1, xlab="r", ylab="alpha", n=501,lwd=1.5)
+curve(pvfun(x,k,n), 0, 1, xlab="p", ylab="alpha", n=501,lwd=1.5)
 eroorbar(res$conf.int, 0.05, lty=2,lwd=1.5)
 curve(pvfun_b(x,k,n,1,1),add=TRUE, n=501, col="royalblue",lwd=1.5)
 eroorbar(ci_b, 0.05, lty=2,lwd=1.5, col="royalblue")
@@ -59,7 +59,7 @@ ci_b = c(qbeta(0.025, shape1 = k+1, shape2 = n-k+1),
          qbeta(0.975, shape1 = k+1, shape2 = n-k+1))
 
 png("pvfun_binom2.png", width = 500, height = 500)
-curve(pvfun(x,k,n), 0, 1, xlab="r", ylab="alpha", n=1001,lwd=1.5)
+curve(pvfun(x,k,n), 0, 1, xlab="p", ylab="alpha", n=1001,lwd=1.5)
 eroorbar(res$conf.int, 0.05, lty=2,lwd=1.5)
 curve(pvfun_b(x,k,n,1,1),add=TRUE, n=1001, col="royalblue",lwd=1.5)
 eroorbar(ci_b, 0.05, lty=2,lwd=1.5, col="royalblue")
