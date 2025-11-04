@@ -21,7 +21,7 @@ $w$ と $d$ を有限の台を持つ離散型の確率変数とする．つま�
 
 $$
 \begin{aligned}
-\mathscr{M} &= D[ p(w, d) ,\ p(w) p(d)) ] \\
+\mathscr{M} &= D[ p(w, d) \| p(w) p(d)) ] \\
 &= \sum_{w,d} p(w,d) \cdot \log \frac{p(w,d)}{p(w) p(d) }.
 \end{aligned}
 $$
