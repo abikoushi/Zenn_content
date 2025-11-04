@@ -3,7 +3,7 @@ title: "TF-IDF指標とカルバック・ライブラ情報量"
 emoji: "💭"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [R]
-published: false
+published: true
 ---
 
 ## はしがき
@@ -15,7 +15,7 @@ Akiko Aizawa (2003), An information-theoretic perspective of tf–idf measures, 
 
 ## 本文
 
-$w$ と $d$ を有限の台を持つ離散型の確率変数とする．つまり多項分布を考える．$w$ は単語（ワード），$d$ は文書（ドキュメント）に対応する質的確率変数だと思ってほしい．
+$w$ と $d$ を有限の台を持つ離散型の確率変数とする．つまり多項分布を考えるのと同じ．$w$ は単語（ワード），$d$ は文書（ドキュメント）に対応する質的確率変数だと思ってほしい．
 
 2つの分布 $f$, $g$ のカルバック・ライブラ（KL）情報量を $D[f \| g]$ と表記する．次の $\mathscr{M}$ は同時分布 $p(x,y)$ を独立な分布の積 $p(x) p(y)$ で近似したときのKL情報量である．
 
@@ -33,10 +33,7 @@ $$
 \tag{1}
 $$
 
-
-さて, $f_{wd}$ を文書 $d$ における単語 $d$ の頻度の観測値とし，さらに $f = \sum _{w,d} f_{wd}$ , $f_{w} = \sum _d f_{wd}$ と書くことにする．
-
-また， $D$ を文書の数（$d = 1, \ldots , D$），$D_w$ を単語 $w$ を含む文書の数とする．
+さて, $f_{wd}$ を文書 $d$ における単語 $d$ の頻度の観測値とし，さらに $f = \sum _{w,d} f_{wd}$ と書くことにする．また， $D$ を文書の数（$d = 1, \ldots , D$），$D_w$ を単語 $w$ を含む文書の数とする．
 
 この記号の下で，文書，単語をランダムに（つまり独立同分布で）選ぶとして， $p(w,d)$ の最尤推定量は，
 
@@ -68,9 +65,9 @@ $$
 
 最後に R による計算例を載せておく．
 
-### 計算例
+## 計算例
 
-`janeaustenr` のデータを用いて TF-IDF 指標を計算してみる．Jane Austen 氏の著作ごとに特徴的な語を選ぶ．
+[Text Mining with R の 3 章](https://www.tidytextmining.com/tfidf) を参考にして， `janeaustenr` のデータから TF-IDF 指標を計算してみる．Jane Austen 氏の著作ごとに特徴的な語を選ぶ．
 
 ```R
 library(janeaustenr)
