@@ -15,7 +15,7 @@ Akiko Aizawa (2003), An information-theoretic perspective of tf–idf measures, 
 
 ## 本文
 
-$w$ と $d$ を有限の台を持つ離散型の確率変数とする．つまり多項分布を考えるのと同じ．$w$ は単語（ワード），$d$ は文書（ドキュメント）に対応する質的確率変数だと思ってほしい．
+$w$ と $d$ を有限の台を持つ離散型の確率変数とする．つまり多項分布を考えるのと同じである．$w$ は単語（ワード），$d$ は文書（ドキュメント）に対応する質的確率変数だと思ってほしい．
 
 2つの分布 $f$, $g$ のカルバック・ライブラ（KL）情報量を $D[f \| g]$ と表記する．次の $\mathscr{M}$ は同時分布 $p(x,y)$ を独立な分布の積 $p(x) p(y)$ で近似したときのKL情報量である．
 
@@ -67,7 +67,7 @@ $$
 
 ## 計算例
 
-[Text Mining with R の 3 章](https://www.tidytextmining.com/tfidf) を参考にして， `janeaustenr` のデータから TF-IDF 指標を計算してみる．Jane Austen 氏の著作ごとに特徴的な語を選ぶ．
+[Text Mining with R の 3 章](https://www.tidytextmining.com/tfidf) を参考にして， `janeaustenr` のデータから TF-IDF 指標を計算してみる．ジェイン・オースティンの著作ごとに特徴的な単語を選ぶ．
 
 ```R
 library(janeaustenr)
