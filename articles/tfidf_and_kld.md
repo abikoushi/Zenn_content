@@ -17,11 +17,11 @@ Akiko Aizawa (2003), An information-theoretic perspective of tf–idf measures, 
 
 $w$ と $d$ を有限の台を持つ離散型の確率変数とする．つまり多項分布を考えるのと同じである．$w$ は単語（ワード），$d$ は文書（ドキュメント）に対応する質的確率変数だと思ってほしい．
 
-2つの分布 $f$, $g$ のカルバック・ライブラ（KL）情報量を $D[f \| g]$ と表記する．次の $\mathscr{M}$ は同時分布 $p(x,y)$ を独立な分布の積 $p(x) p(y)$ で近似したときのKL情報量である．
+2つの分布 $p$, $q$ のカルバック・ライブラ（KL）情報量を $D[p \| q]$ と表記する．次の $\mathscr{M}$ は同時分布 $p(x,y)$ を独立な分布の積 $p(x) p(y)$ で近似したときのKL情報量である．
 
 $$
 \begin{aligned}
-\mathscr{M} &= D[ p(w, d) \| p(w) p(d)) ] \\
+\mathscr{M} &= D[ p(w, d) \| p(w) p(d) ] \\
 &= \sum_{w,d} p(w,d) \cdot \log \frac{p(w,d)}{p(w) p(d) }.
 \end{aligned}
 $$
