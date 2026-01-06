@@ -10,7 +10,7 @@
   "license": "ISC",
   "description": "Zenn のコンテンツ管理用リポジトリです。",
   "dependencies": {
-    "zenn-cli": "^0.2.3"
+    "zenn-cli": "^0.2.11"
   },
   "repository": {
     "type": "git",
