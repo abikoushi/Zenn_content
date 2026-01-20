@@ -3,7 +3,7 @@ title: "ポアソン分布と多項分布およびガンマ分布とディリク
 emoji: "🕌"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [R, 統計学]
-published: false
+published: true
 ---
 
 ## 概略
@@ -213,5 +213,9 @@ system.time({
 *実践が経験分布．点線が理論的な（？）分布関数*
 
 乱数の経験分布が上で求めた周辺分布のベータ分布とほぼ一致していることがわかる．
+
+作図も含めたコードの全体はこちら：
+
+https://github.com/abikoushi/Zenn_content/blob/main/R/poi-mul_gam-dir.R
 
 おしまい．
