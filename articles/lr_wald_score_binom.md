@@ -13,12 +13,12 @@ published: true
 
 と，言うときにいま僕が手元で参照しているのは [『現代数理統計学の基礎』（久保川達也, 共立出版）](https://www.kyoritsu-pub.co.jp/book/b10003681.html) だが, これ以外にも表紙のどこかに「数理統計学」と入っているような本には同様のことが書かれていることが多いと思う.
 
-両側検定，
+すなわち，次のような両側検定，
 
-帰無仮説: $\theta = \theta_0$（1点）
-対立仮説: $\theta \neq \theta_0$
+- 帰無仮説: $\theta = \theta_0$（1点）
+- 対立仮説: $\theta \neq \theta_0$
 
-の検定統計量 $T(X)$（標本$X$の関数）と棄却域$R(\theta_0)$（帰無仮説のパラメータに依存）から， 
+を考えるとき，検定統計量 $T(X)$（標本$X$の関数）と棄却域 $R(\theta_0)$（帰無仮説のパラメータに依存）から， 
 
 $$
 P_{\theta_0}(T(X) \in R(\theta_0)) = \alpha
@@ -194,7 +194,7 @@ $$
 C(X) = [C_{-} , C_{+}]
 $$
 
-ただし,
+と書ける．ただし,
 
 $$
 C_{-} = (1+\frac{z_{\alpha/2}}{n})^{-1} \left( \hat \theta - \frac{z_{\alpha/2}^2}{2n} - z_{\alpha/2}\sqrt{\frac{z_{\alpha/2}}{4n^2} + \frac{\hat \theta (1-\hat \theta)}{n}} \right),
