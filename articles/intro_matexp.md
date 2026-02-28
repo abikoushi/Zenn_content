@@ -215,7 +215,7 @@ A = matrix(c(-a, 0,
               a, -b), 2, 2, byrow = TRUE)
 yini  <- c(X = 1, Y = 0)
 times <- seq(0, 30, by = 0.5)
-out   <- ode(yini, times, modLinear, A)
+out_A   <- ode(yini, times, modLinear, A)
 ```
 
 一方，(4)は下記の関数 `Solm` のように書ける．
@@ -333,5 +333,9 @@ $$
 また，冒頭で触れた [長谷川浩司『線形代数』](https://www.nippyo.co.jp/shop/book/6704.html) や [Hirsch・Smale・Devaney『力学系入門』](https://www.kyoritsu-pub.co.jp/book/b10003811.html)　では(5)と同様の方程式をバネの振動を例に解説している．高校などで物理を既習の方はこちらのほうがイメージしやすいかもしれない．
 
 ちなみに，数値計算をいろいろやるときは今回やったように線形代数の教科書に出ているような式をそのまま打ち込むと遅いというのが結構あるあるで，例えば[伊理正夫・藤野和建『数値計算の常識](https://www.kyoritsu-pub.co.jp/book/b10011417.html) の第5章は「逆行列よさようなら」である．行列の指数関数については [expm](https://cran.r-project.org/web/packages/expm/index.html) というパッケージがあるのでよりより実践的にはこういうパッケージを使うのがいいと思う．
+
+本記事で使用したコードの全体はこちら：
+
+https://github.com/abikoushi/Zenn_content/blob/main/R/intro_matexp.R
 
 おしまい．
