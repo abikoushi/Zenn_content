@@ -2,7 +2,7 @@
 title: "行列の対角化から特異値分解までの行間を埋めるためのノート"
 emoji: "↘️"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [R, 数値計算]
+topics: [R, 数値計算, 線形代数]
 published: true
 ---
 
