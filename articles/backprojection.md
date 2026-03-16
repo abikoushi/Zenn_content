@@ -142,4 +142,8 @@ genefun_c <- function(maxrd,maxed,mined,lambda,m,eta){
 
 和を取ると大数の法則が効いてくれるので問題が緩和される．これはヒストグラムではビンの幅の取り方に依存して印象が変わるが，経験分布関数ではその煩わしさがないのと類似している．
 
+使用したコード全体は以下：
+
+[https://github.com/abikoushi/Zenn_content/blob/main/R/backprojecttion.R]
+
 おしまい．
