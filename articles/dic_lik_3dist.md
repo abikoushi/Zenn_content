@@ -2,7 +2,7 @@
 title: "2重区間打ち切りされた観測についての尤度"
 emoji: "🔖"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [R, 統計]
+topics: [R, 統計学, 疫学]
 published: true
 ---
 

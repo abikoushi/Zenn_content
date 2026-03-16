@@ -2,7 +2,7 @@
 title: "Becker et al. (1991) より，感染者数の逆計算を試す"
 emoji: "🦠"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [R, 統計学]
+topics: [R, 統計学, 疫学]
 published: true
 ---
 
