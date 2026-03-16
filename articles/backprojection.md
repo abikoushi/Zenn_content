@@ -3,7 +3,7 @@ title: "Becker et al. (1991) より，感染者数の逆計算を試す"
 emoji: "🦠"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [R, 統計学]
-published: false
+published: true
 ---
 
 ## 背景
@@ -144,6 +144,6 @@ genefun_c <- function(maxrd,maxed,mined,lambda,m,eta){
 
 使用したコード全体は以下：
 
-[https://github.com/abikoushi/Zenn_content/blob/main/R/backprojecttion.R]
+https://github.com/abikoushi/Zenn_content/blob/main/R/backprojecttion.R
 
 おしまい．
