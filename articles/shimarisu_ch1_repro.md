@@ -1,9 +1,9 @@
 ---
-title: "しまりす本第1話より：研究結果の再現性を分割表で考える"
+title: "しまりす本第1話より：研究結果の再現性を条件付き確率で考える"
 emoji: "🌰"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [R, 統計学]
-published: false
+published: true
 ---
 
 ## あらまし
