@@ -2,7 +2,7 @@
 title: "二項分布とベータ分布の関係+α"
 emoji: "🗼"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [R, 統計学]
+topics: [R, 統計学, 確率分布]
 published: true
 ---
 
