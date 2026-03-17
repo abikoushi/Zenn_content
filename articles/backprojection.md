@@ -99,7 +99,7 @@ lambdaest <- function(count_obs, ft, maxit=1000,tol=0.1){
 }
 ```
 
-シミュレーションでは $t=10,11,12,..20$ では $ \lambda_t = 100$, 他の場合は $\lambda_t = 0$ とした．潜伏期間の分布は形状パラメータ2，スケールパラメータ7のワイブル分布とした．こんなふうだ．
+シミュレーションでは $t=10,11,12,\ldots,20$ では $\lambda_t = 100$，他の場合は $\lambda_t = 0$ とした．潜伏期間の分布は形状パラメータ2，スケールパラメータ7のワイブル分布とした．こんなふうだ．
 
 ```r
 genefun_c <- function(maxrd,maxed,mined,lambda,m,eta){
