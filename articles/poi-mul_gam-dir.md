@@ -2,7 +2,7 @@
 title: "ポアソン分布と多項分布およびガンマ分布とディリクレ分布の関係"
 emoji: "🕌"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [R, 統計学]
+topics: [R, 統計学, 確率分布]
 published: true
 ---
 

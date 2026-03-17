@@ -2,7 +2,7 @@
 title: "ポアソン分布より分散が大きい分布としての負の二項分布"
 emoji: "🥚"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [R, 統計]
+topics: [R, 統計学, 確率分布]
 published: true
 ---
 

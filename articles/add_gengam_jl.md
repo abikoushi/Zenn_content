@@ -2,7 +2,7 @@
 title: "Distributions.jl を利用して確率分布を宣言する（一般化ガンマ分布の例）"
 emoji: "⛑️"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [Julia, R]
+topics: [Julia, R, 確率分布]
 published: true
 ---
 

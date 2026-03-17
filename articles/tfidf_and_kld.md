@@ -2,7 +2,7 @@
 title: "TF-IDF指標とカルバック・ライブラ情報量"
 emoji: "💭"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [R]
+topics: [R, 統計学]
 published: true
 ---
 

@@ -2,7 +2,7 @@
 title: "確率の対数を取る（あるいは情報エントロピー入門）"
 emoji: "🎉"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [Julia]
+topics: [Julia, 統計学]
 published: true
 ---
 
