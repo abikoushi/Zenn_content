@@ -49,6 +49,32 @@ $$
 - [佐竹一郎『線形代数学（新装版）』（裳華房）](https://www.shokabo.co.jp/mybooks/ISBN978-4-7853-1316-6.htm)
 - [長谷川浩司『線形代数［改訂版］』（日本評論社）](https://www.nippyo.co.jp/shop/book/6704.html)
 
+相異なる固有値と属する固有ベクトルを行列として並べてまとめて書くと，固有値・固有ベクトルは次のように表せる．
+
+$$
+A(\boldsymbol{x}_1, \boldsymbol{x}_2, \ldots, \boldsymbol{x}_r) = (\boldsymbol{x}_1, \boldsymbol{x}_2, \ldots, \boldsymbol{x}_r)\left(\begin{matrix} \alpha_1 & 0 & 0 & 0\\
+0 & \alpha_2 & 0 & 0\\
+\vdots & \ddots & \ddots & \vdots\\
+0 & 0 & 0 &  \alpha_r  \\
+ \end{matrix}\right)
+$$
+
+$r$ は $A$ のランクである．固有ベクトルとして直交するよう正規化されているものを選ぶと，両辺に前から固有ベクトルを並べた行列を掛け，次のようにできる．
+
+$$
+\begin{pmatrix}
+ \boldsymbol{x}_1'\\ \boldsymbol{x}_2'\\
+ \vdots\\
+ \boldsymbol{x}_r'
+\end{pmatrix}A(\boldsymbol{x}_1, \boldsymbol{x}_2, \ldots, \boldsymbol{x}_r) = \left(\begin{matrix} \alpha_1 & 0 & 0 & 0\\
+0 & \alpha_2 & 0 & 0\\
+\vdots & \ddots & \ddots & \vdots\\
+0 & 0 & 0 &  \alpha_r  \\
+ \end{matrix}\right)
+ 
+$$
+
+これでおおむね定理1が言えた．
 
 定理 1 から次の定理 2 が言える．
 
