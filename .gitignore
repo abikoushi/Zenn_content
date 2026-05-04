@@ -8,3 +8,4 @@ tex/*/*.log
 tex/*/*.pdf
 stan/stratified_stan/case1$
 stan/stratified_stan/case2$
+.positai
