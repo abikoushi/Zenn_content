@@ -27,11 +27,9 @@ ini = c(S=0.99, I=0.01, R=0)
 ode_out1 <- ode(y=ini, times=times, func=SIRmod, parms=pars)
 
 R0 <- pars["beta"]/pars["gamma"]
-
-
 z_root <- uniroot(function(z)R0 + (log1p(-z)-log(ini["S"]))/(z-ini["R"]), interval = c(0.001,1))
 
-z_root$root
+#print(z_root$root)
 
 res1 <- data.frame(ode_out1) %>% 
   pivot_longer(S:R) %>% 
@@ -59,7 +57,6 @@ res2 <- group_by(res2, group) %>%
 
 ggplot(data=res2, aes(x=time, y=I, colour=iniR, group=group)) +
   geom_line()+
-  #scale_color_viridis_c()+
   scale_colour_gradient2(midpoint = pars["gamma"]/pars["beta"])+
   labs(colour="S(0)")+theme_bw()
 ggsave("SIR_I.png", width = 5, height = 5)
