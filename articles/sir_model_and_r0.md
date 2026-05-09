@@ -40,7 +40,7 @@ SIRmod <- function(Time, State, Pars) {
 }
 
 pars  <- c(beta=1.5, gamma=1)
-
+times <- seq(0, 20, by = 0.1)
 ini = c(S=0.99, I=0.01, R=0)
 ode_out1 <- ode(y=ini, times=times, func=SIRmod, parms=pars)
 ```
