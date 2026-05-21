@@ -3,12 +3,12 @@ title: "べき乗則ポアソン過程の最尤推定"
 emoji: "⛓️‍💥"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [R, 確率過程]
-published: false
+published: true
 ---
 
 ## べき乗則ポアソン過程とは
 
-べき乗則ポアソン過程は power-law poisson process の私による直訳で，強度関数（intensity function）が $\lambda(t)= (\beta/\alpha) (t/\alpha)^{\beta-1}$ の非定常ポアソン過程のことである. 信頼性工学などで使われる．
+べき乗則ポアソン過程は power-law Poisson process の私による直訳で，強度関数（intensity function）が $\lambda(t)= (\beta/\alpha) (t/\alpha)^{\beta-1}$ の非定常ポアソン過程のことである. 信頼性工学などで使われる．
 
 この強度関数はワイブル分布のハザード関数と一致するのでワイブル過程（Weibull process）と呼ばれることもある．ワイブル分布の再生過程と紛らわしいかと思ってこの記事では power-law の方に注目した用語を採用してみた．
 
@@ -91,7 +91,7 @@ $$
 NHPP_powerlaw = function(Tmax, alpha, beta, maxit){
   mlogz = rexp(1)
   t <- rep(Inf, maxit)
-  t[1] = alpha*mlogz^(1/beta[1])
+  t[1] = alpha*mlogz^(1/beta)
   for(i in 2:maxit){
     mlogz = rexp(1)
     ti = alpha*( mlogz + (t[i-1]/alpha)^beta )^( 1/beta )
@@ -118,7 +118,7 @@ $$
 $$
 \begin{aligned}
 \log L(\alpha, \beta)&= \left\{ \sum_{i=1}^n \log\lambda ( t_{i})\right\} -\Lambda(T) \\
-&= \sum_{i=1}^{n}\left( \log \beta - \log \alpha + (\beta-1)(\log(t_i/\alpha) \right) - (T/\alpha)^\beta \\
+&= \left\{\sum_{i=1}^{n} \log \beta - \log \alpha + (\beta-1)\log(t_i/\alpha) \right\} - (T/\alpha)^\beta \\
 &= n\log \beta - n\log \alpha + (\beta-1)\left\{ \sum_{i=1}^{n}\log(t_i/\alpha) \right\}- (T/\alpha)^\beta
 \end{aligned}
 $$
@@ -128,7 +128,7 @@ $$
 $\alpha$ については，
 
 $$
- \frac{\partial}{\partial \alpha} \log L(\alpha, \beta)= -\frac{n}{\alpha} +  \frac{T^\beta}{\alpha^{\beta+1}} = 0,
+ \frac{\partial}{\partial \alpha} \log L(\alpha, \beta)= -\frac{n}{\alpha} -  (\beta-1) \frac{n}{\alpha} - \beta \frac{T^\beta}{\alpha^{\beta+1}} = 0,
 $$
 
 を解くことにより，

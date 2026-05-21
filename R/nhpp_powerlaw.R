@@ -11,7 +11,7 @@ Intensity_powerlaw <- function(x,alpha,beta){
 NHPP_powerlaw = function(Tmax, alpha, beta, maxit){
   mlogz = rexp(1)
   t <- rep(Inf, maxit)
-  t[1] = alpha*mlogz^(1/beta[1])
+  t[1] = alpha*mlogz^(1/beta)
   for(i in 2:maxit){
     mlogz = rexp(1)
     ti = alpha*( mlogz + (t[i-1]/alpha)^beta )^( 1/beta )
