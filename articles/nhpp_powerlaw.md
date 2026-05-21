@@ -182,6 +182,6 @@ $\beta=0.8$, $\alpha=1$ のとき：
 
 本記事で使用した R のコード全体はこちら：
 
-
+https://github.com/abikoushi/Zenn_content/blob/main/R/nhpp_powerlaw.R
 
 いったん以上です（区間推定に続くかも）．
