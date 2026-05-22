@@ -3,7 +3,7 @@ title: "ガンマ分布の形状パラメータの検定（あるいは局外母
 emoji: "📕"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [R, 統計学]
-published: false
+published: true
 ---
 
 ## はじめに
