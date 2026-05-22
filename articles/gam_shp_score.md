@@ -2,7 +2,7 @@
 title: "ガンマ分布の形状パラメータの検定（あるいは局外母数があるときのスコア検定の例題）"
 emoji: "📕"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: []
+topics: [R, 統計学]
 published: false
 ---
 
@@ -45,7 +45,7 @@ $$
 
 $$
 U_\alpha(\alpha,\theta)=
- \frac{\partial L}{\partial \alpha}L(\alpha,\theta)=
+ \frac{\partial}{\partial \alpha}L(\alpha,\theta)=
  \left\{\sum_{i=1}^n \log X_i \right\}- n\log\theta- n\psi(\alpha),
 $$
 
@@ -54,7 +54,7 @@ $$
 尺度パラメータ $\theta$ に関するスコア関数は，
 
 $$
-U_\theta(\alpha,\hat\theta)= \frac{\partial}{\partial \theta} L(\alpha,\hat\theta)= 
+U_\theta(\alpha,\theta)= \frac{\partial}{\partial \theta} L(\alpha,\theta)= 
  \frac{1}{\theta^2}\sum_{i=1}^n X_i -\frac{n\alpha}{\theta}.
 $$
 
@@ -87,7 +87,7 @@ $$
 
 ### 条件付きスコア検定
 
-スコア検定は，スコア関数がフィッシャー情報行列の逆行列を分散共分散行列とした多変量正規分布に漸近的に従うことを利用したものであった．フィッシャー情報行列の成分は次のようになる．
+スコア検定は，スコア関数がフィッシャー情報行列の逆行列を分散共分散行列とした多変量正規分布に漸近的に従うことを利用したものであった．スコア関数フィッシャー情報行列の成分は次のようになる．
 
 $$
 I_{\alpha\alpha}=n\psi'(\alpha),
@@ -106,10 +106,10 @@ $$
 $\theta$ のスコアを所与としたときの条件付き分散を求めてみる．
 
 $$
-I_{\mathrm{eff}} = I_{\alpha\alpha} - I_{\alpha\theta} I_{\theta\theta}^{-1}
-I_{\theta\alpha}
-=
-n\left(\psi'(\alpha)-\frac1\alpha\right).
+\begin{aligned}
+I_{\mathrm{eff}} &= I_{\alpha\alpha} - I_{\alpha\theta} I_{\theta\theta}^{-1}I_{\theta\alpha}\\
+& = n\left(\psi'(\alpha)-\frac1\alpha\right).
+\end{aligned}
 $$
 
 これを有効情報量（efficient information）と呼ぶことがある．$\theta$ のスコアを所与としたとき次の検定統計量 $T$ は漸近的に標準正規分布に従う．
@@ -157,9 +157,11 @@ pv_simfun <- function(n, shape0, shape, scale){
 }
 ```
 
+p 値の分布をプロットしてみよう．
+
 ![](/images/gam_shp_score/alpha.png)
 
-おおむね名目上の水準が保たれていることがわかる．
+p 値の分布が45度線に乗っていることから，おおむね名目上の有意水準が保たれていることがわかる．
 
 次に $\alpha_0 = 1$ として検出力のシミュレーション．
 
