@@ -41,7 +41,7 @@ $$
 L(\alpha,\theta)=(\alpha-1)\sum_{i=1}^n \log X_i-\frac1\theta\sum_{i=1}^n X_i-n\alpha\log\theta-n\log\Gamma(\alpha).
 $$
 
-形状パラメータ $\alpha$ に関するスコア関数は
+形状パラメータ $\alpha$ に関するスコア関数は，
 
 $$
 U_\alpha(\alpha,\theta)=
@@ -66,7 +66,7 @@ $$
 \frac{\bar X}{\alpha_0},
 $$
 
-ただし
+ただし，
 
 $$
 \bar X=\frac1n\sum_{i=1}^n X_i.
@@ -74,11 +74,12 @@ $$
 
 
 $\hat\theta_0$ を $U_\alpha$ に代入すると，
+
 $$
 U_\alpha(\alpha_0,\hat\theta_0)=n\left(\overline{\log X}-\log \bar X+\log \alpha_0-\psi(\alpha_0)\right)
 $$
 
-ただし
+ただし，
 
 $$
 \overline{\log X} = \frac1n\sum_{i=1}^n \log X_i.
@@ -164,5 +165,8 @@ pv_simfun <- function(n, shape0, shape, scale){
 
 ![](/images/gam_shp_score/beta.png)
 
-とりあえず導出したスコア検定が検定として使えそうなことはわかった．
+とりあえず導出したスコア検定が検定らしくなっていそうなことはわかった．
 
+R のコード全体はこちら：
+
+https://github.com/abikoushi/Zenn_content/blob/main/R/gam_shp_score.R
