@@ -173,10 +173,12 @@ estimator <- function(dat, t_max){
 $\beta=1.5$, $\alpha=1$ のとき：
 
 ![](/images/nhpp_powerlaw/animation1.gif)
+*黒い線が観測された値，オレンジの線が推定値，青い点線が真値*
 
 $\beta=0.8$, $\alpha=1$ のとき：
 
 ![](/images/nhpp_powerlaw/animation2.gif)
+*黒い線が観測された値，オレンジの線が推定値，青い点線が真値*
 
 べき関数にべき関数を当てはめているわけだが観測期間が短いときはけっこうあばれる．観測期間が長くなると収束してくる．
 
