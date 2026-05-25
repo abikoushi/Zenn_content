@@ -90,15 +90,15 @@ $$
 スコア検定は，スコア関数がフィッシャー情報行列の逆行列を分散共分散行列とした多変量正規分布に漸近的に従うことを利用したものであった．スコア関数を微分して期待値を取ることにより，フィッシャー情報行列の成分は次のようになる．
 
 $$
-I_{\alpha\alpha}=n\psi'(\alpha),
+I_{\alpha\alpha}= -E\left[\frac{\partial^2}{\partial \alpha^2}L(\alpha, \theta) \right] = n\psi'(\alpha),
 $$
 
 $$
-I_{\alpha\theta}=\frac{n}{\theta},
+I_{\alpha\theta}=-E\left[\frac{\partial^2}{\partial \alpha \partial \theta}L(\alpha, \theta) \right]=\frac{n}{\theta},
 $$
 
 $$
-I_{\theta\theta}=\frac{n\alpha}{\theta^2},
+I_{\theta\theta}=-E\left[\frac{\partial^2}{\partial \theta^2}L(\alpha, \theta)\right] = \frac{n\alpha}{\theta^2},
 $$
 
 ここで $\psi'(\alpha)$ はトリガンマ関数である．
