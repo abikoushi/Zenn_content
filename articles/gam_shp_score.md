@@ -45,7 +45,7 @@ $$
 
 $$
 U_\alpha(\alpha,\theta)=
- \frac{\partial}{\partial \alpha}L(\alpha,\theta)=
+\left. \frac{\partial}{\partial u}L(u,\theta) \right|_{u=\alpha}=
  \left\{\sum_{i=1}^n \log X_i \right\}- n\log\theta- n\psi(\alpha),
 $$
 
@@ -54,12 +54,12 @@ $$
 尺度パラメータ $\theta$ に関するスコア関数は，
 
 $$
-U_\theta(\alpha,\theta)= \frac{\partial}{\partial \theta} L(\alpha,\theta)= 
+U_\theta(\alpha,\theta)= \left. \frac{\partial}{\partial \theta}L(\alpha,u)\right|_{u=\theta} = 
  \frac{1}{\theta^2}\sum_{i=1}^n X_i -\frac{n\alpha}{\theta}.
 $$
 
 
-帰無仮説 $\alpha=\alpha_0$ の下で $\theta$ の最尤推定量を求めると，$U_\theta=0$ を解くことにより，
+帰無仮説 $\alpha=\alpha_0$ の下で $\theta$ の最尤推定量を求めると，$U_\theta(\alpha,\theta)=0$ を $\theta$ について解くことにより，
 
 $$
 \hat\theta_0 =
