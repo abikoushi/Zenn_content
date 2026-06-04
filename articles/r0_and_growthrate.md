@@ -3,7 +3,7 @@ title: "基本再生産数と内的増殖率"
 emoji: "📈"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [R, 疫学]
-published: publish
+published: true
 ---
 
 ## このノートについて
