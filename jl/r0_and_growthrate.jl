@@ -20,8 +20,8 @@ function solve_SIR(β, γ, S0, I0, R0, tspan)
 end
 
 
-β = 0.3
-γ = 0.1
+β = 1
+γ = 0.25
 S0 = 0.999
 I0 = 0.001
 R0 = 0.0
@@ -53,7 +53,7 @@ fig = draw(p4+p3+p2+p1,
  figure=(size=(600, 500),) 
 )
 
-save("sir_plot.png", fig)
+save("plot1.png", fig)
 
 #####
 
@@ -83,10 +83,11 @@ for m in means, cv in CVs
     ))
 end
 
-resdf
 
 plt_heat = data(resdf) *
     mapping(:mean, :CV, :R0) *
     visual(Heatmap)
 
-draw(plt_heat)
+fig2 = draw(plt_heat)
+
+save("plot2.png", fig2)
