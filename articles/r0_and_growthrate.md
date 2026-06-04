@@ -115,7 +115,7 @@ $$
 A(\tau) \propto 1-F(\tau)= \exp(-\gamma \tau).
 $$
 
-$[0,\infty]$ での積分が 1 になるよう $A(\tau)$ を正規化しなおすと，次が得られる
+区間 $[0,\infty)$ での積分が 1 になるよう $A(\tau)$ を正規化しなおすと，次が得られる
 
 $$
 g(\tau) = \gamma\exp(-\gamma \tau).
@@ -166,3 +166,4 @@ R0hat_gamma <- function(m,CV){
 作図に用いた R のコード全体はこちら：
 
 https://github.com/abikoushi/Zenn_content/blob/main/R/r0_and_growthrate.R
+

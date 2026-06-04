@@ -153,4 +153,4 @@ https://github.com/abikoushi/Zenn_content/blob/main/R/sir_model_and_r0.R
 
 微分方程式で表されるモデルの傾きが 0 になる点の集合をヌルクラインと呼ぶ．ヌルクラインを境に解の振る舞いが大きく変わるというのは，SIRモデルに限ったことではない．このことは [Hirsch・Smale・Devaney 力学系入門（共立出版）](https://www.kyoritsu-pub.co.jp/book/b10003811.html) などに詳しい．
 
-おしまい．
+関連記事：[基本再生産数と内的増殖率](https://zenn.dev/abe2/articles/r0_and_growthrate)
