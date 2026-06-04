@@ -8,7 +8,7 @@ published: false
 
 ## このノートについて
 
-[西浦博　編著『感染症流行を読み解く数理』（日本評論社）](https://www.nippyo.co.jp/shop/book/8827.html) の第2章，第3章（ともに西浦博による）の一部を，自分なりに行間を埋めながら読んでみたもので [SIRモデルと基本再生産数](https://zenn.dev/abe2/articles/sir_model_and_r0) の続き的な内容です．
+このノートは [西浦博　編著『感染症流行を読み解く数理』（日本評論社）](https://www.nippyo.co.jp/shop/book/8827.html) の第2章，第3章（ともに西浦博による）の一部を，自分なりに行間を埋めながら読んでみたもので [SIRモデルと基本再生産数](https://zenn.dev/abe2/articles/sir_model_and_r0) の続き的な内容です．
 
 ただし，『感染症流行を読み解く数理』だけだとSIRモデルを元に定義された基本再生産数と一般的な基本再生産数（後述）の関係がよくわからなかったので，[Ma, J. (2020). Estimating epidemic exponential growth rate and basic reproduction number. Infectious Disease Modelling, 5, 129-141.](https://www.sciencedirect.com/science/article/pii/S2468042719300491) も参考にしました．
 
@@ -59,7 +59,7 @@ $$
 I(t) = I(0)\exp( (\beta -\gamma) t ).
 $$
 
-(1) と比較し，内的増殖率は $r = \beta-\gamma$ である．
+ (1) と比較し，内的増殖率は $r = \beta-\gamma$ である．
 
 SIRモデルの解とこの指数関数を並べてプロットしてみよう．
 
@@ -145,7 +145,7 @@ $$
 
 一般の分布の場合，基本再生産数 $R_0$ は内的増殖率だけでなく，世代時間の分布 $g(\tau)$ に依存する．
 
-ためしに $g(\tau)$ をガンマ分布として計算してみよう．
+ためしに $g(\tau)$ をガンマ分布として計算してみよう．次のようにした．
 
 ```r
 R0hat_gamma <- function(m,CV){
