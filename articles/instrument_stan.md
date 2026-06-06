@@ -1,9 +1,9 @@
 ---
 title: "Stan ユーザーのための操作変数法"
-emoji: "😸"
+emoji: "🎻"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [R, Stan, 統計, 因果推論]
-published: false
+published: true
 ---
 
 ## はじめに
@@ -13,7 +13,7 @@ published: false
 ![](/images/instrument_stan/graph1.png)
 *未観測の変数を丸で囲んだ因果ダイアグラム*
 
-知りたい効果とは $X$ に介入を行ったときの効果，すなわち $X$ に入るすべてのパスを削除し，$X$ を適当な値に固定したときの効果である．因果推論の大物，パールはこのような操作を「因果推論の第一法則」と呼んでいる（[著：ジューディア・パール，ダナ・マッケンジー，訳：夏目大『因果推論の科学』文藝春秋社](https://books.bunshun.jp/ud/book/num/9784163915968) などを参照）．
+知りたい効果とは $X$ に介入を行ったときの効果，すなわち $X$ に入るすべてのパスを削除し，$X$ を適当な値に固定したときの効果である．因果推論の大物であるパールは，このような操作ができることを「因果推論の第一法則」と呼んでいる（[著：ジューディア・パール，ダナ・マッケンジー，訳：夏目大『因果推論の科学』文藝春秋社](https://books.bunshun.jp/ud/book/num/9784163915968) などを参照）．
 
 ![](/images/instrument_stan/graph3.png)
 *介入後の因果ダイアグラム*
@@ -142,7 +142,7 @@ Stan のコードを実行してみると，次のように事後分布に収束
 ![](/images/instrument_stan/trace.png)
 *MCMC系列のトレースプロット*
 
-`TE` の事後予測分布のヒストグラムとシミュレーションで設定した真の $\alpha_yx$ の値 0.5 を比較する．
+`TE` の事後予測分布のヒストグラムとシミュレーションで設定した真の $\alpha_{yx}$ の値 0.5 を比較する．
 
 ![](/images/instrument_stan/hist1.png)
 *介入後の効果の事後予測分布．三角形のマーカーは事後予測分布の平均，グレーの点線が真の平均．*
@@ -167,9 +167,7 @@ $$
 \hat{\alpha}_{yx} = \mathrm{Cov}(Y,Z) \, \mathrm{Cov}(X,Z)^{-1}
 $$
 
-$Z$ を操作変数と呼ぶ．これが普通の（？）操作変数法として [宮川雅巳『統計的因果推論』（朝倉書店）](https://www.asakura.co.jp/detail.php?book_code=12781&srsltid=AfmBOorK6dX3-enEcoTBr6w80SWGET117fXjczaP5YwvOgNNS3cqAozH)　などの教科書で解説されている．
-
-この推定値も先のヒストグラムに重ねてみよう．
+$Z$ を操作変数と呼ぶ．これが普通の（？）操作変数法として [宮川雅巳『統計的因果推論』（朝倉書店）](https://www.asakura.co.jp/detail.php?book_code=12781&srsltid=AfmBOorK6dX3-enEcoTBr6w80SWGET117fXjczaP5YwvOgNNS3cqAozH)　などの教科書で解説されている．この推定値も先のヒストグラムに重ねてみよう．
 
 ![](/images/instrument_stan/hist2.png)
 *介入後の効果の事後予測分布．三角形のマーカーは事後予測分布の平均，オレンジの点線が操作変数法による点推定値．*
