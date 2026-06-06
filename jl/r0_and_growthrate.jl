@@ -40,11 +40,11 @@ p3 = AlgebraOfGraphics.data(solution_df)*
     mapping(:time, :R) *
     visual(Lines, color=:lightgray)
 
-p3 + p2 + p1 |>draw(axis=(ylabel="I",))
+p3 + p2 + p1 |> draw(axis=(ylabel="I",))
 
 exp_df = DataFrame(time=solution.t,  exp = I0*exp.((β-γ) .* solution.t))
 
-p4 =    AlgebraOfGraphics.data(exp_df)*
+p4 = AlgebraOfGraphics.data(exp_df)*
     mapping(:time, :exp) *
     visual(Lines, color=:blue, linestyle=:dash) 
 
@@ -88,6 +88,6 @@ plt_heat = data(resdf) *
     mapping(:mean, :CV, :R0) *
     visual(Heatmap)
 
-fig2 = draw(plt_heat)
+fig2 = draw(plt_heat,  figure=(size=(500, 500),))
 
 save("plot2.png", fig2)

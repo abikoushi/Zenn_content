@@ -8,4 +8,5 @@ tex/*/*.log
 tex/*/*.pdf
 stan/stratified_stan/case1$
 stan/stratified_stan/case2$
+stan/instrument_stan/IV$
 .positai
