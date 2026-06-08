@@ -13,7 +13,7 @@ published: true
 ![](/images/instrument_stan/graph1.png)
 *未観測の変数を丸で囲んだ因果ダイアグラム*
 
-知りたい効果とは $X$ に介入を行ったときの効果，すなわち $X$ に入るすべてのパスを削除し，$X$ を適当な値に固定したときの効果である．因果推論の大物であるパールは，このような操作ができることを「因果推論の第一法則」と呼んでいる（[著：ジューディア・パール，ダナ・マッケンジー，訳：夏目大『因果推論の科学』文藝春秋社](https://books.bunshun.jp/ud/book/num/9784163915968) などを参照）．
+知りたい効果とは $X$ に介入を行ったときの効果，すなわち $X$ に入るすべてのパスを削除し，$X$ を適当な値に固定したときの効果である．因果推論の大物であるパールは，このような操作ができることを「因果推論の第一法則」と呼んでいる（[On the First Law of Causal Inference - Causal Analysis in Theory and Practice](https://causality.cs.ucla.edu/blog/index.php/2014/11/29/on-the-first-law-of-causal-inference/), [著：ジューディア・パール，ダナ・マッケンジー，訳：夏目大『因果推論の科学』文藝春秋社](https://books.bunshun.jp/ud/book/num/9784163915968) などを参照）．
 
 ![](/images/instrument_stan/graph3.png)
 *介入後の因果ダイアグラム*
