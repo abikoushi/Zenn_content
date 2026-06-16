@@ -3,7 +3,7 @@ title: "打ち切りのあるときの致命割合"
 emoji: "✂️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [R, 疫学]
-published: false
+published: true
 ---
 
 ## はじめに
