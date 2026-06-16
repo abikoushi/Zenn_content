@@ -26,7 +26,7 @@ for(i in 1:100){
   n <- rpois(1,1000)
   ti_c <- sort(runif(n, 0, Tmax))
   d <- rbinom(n, 1, 0.2)
-  ti_d <- sort(ti_c + ifelse(d==1, rlnorm(10000, 2, 0.5), Inf))
+  ti_d <- sort(ti_c + ifelse(d==1, rlnorm(n, 2, 0.5), Inf))
   
   Cases <- sapply(1:Tmax, function(t)sum(ti_c<=t))
   Deaths <- sapply(1:Tmax, function(t)sum(ti_d<=t))

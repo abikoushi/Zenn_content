@@ -32,7 +32,7 @@ d_i &\sim \mathrm{Bernoulli}(p)
 \end{aligned}
 $$
 
-$t^d_i <t$ を満たす $t^c_i$ の数を $C_t$ ，$t^d_i <t$ を満たす $t^d_i$ の数を $D_t$ とする．
+$t^c_i <t$ を満たす $t^c_i$ の数を $C_t$ ，$t^d_i <t$ を満たす $t^d_i$ の数を $D_t$ とする．
 
 イメージしやすいように，一回のシミュレーション結果を図示してみよう．
 
@@ -42,7 +42,7 @@ set.seed(1234)
 n <- rpois(1,10*Tmax) #レート10の定常ポアソン過程
 ti_c <- sort(runif(n, 0, Tmax))
 d <- rbinom(n, 1, 0.2) #真の致命割合は0.2
-ti_d <- sort(ti_c + ifelse(d==1, rlnorm(10000, 2, 0.5), Inf)) #Fは対数正規分布とした
+ti_d <- sort(ti_c + ifelse(d==1, rlnorm(n, 2, 0.5), Inf)) #Fは対数正規分布とした
 
 Cases <- sapply(1:Tmax, function(t)sum(ti_c<=t))
 Deaths <- sapply(1:Tmax, function(t)sum(ti_d<=t))
@@ -86,7 +86,7 @@ aCFR と cCFR をシミュレーションで比較しよう．
 ![](/images/censored_cfr/fit.png)
 *x軸の時点までで評価した致命割合の比較．100回のシミュレーション結果．*
 
-aCFR は真の致命割合を中心に分布していることがわかる．ただし常に保守的な推定値を与え，最初期は1を超える値が推定されることもある．
+aCFR は真の致命割合を中心に分布していることがわかる．ただし常に保守的な推定値を与え，最初期は1を超える値が推定されることもある．cCFR はほぼ常に真の致命割合より小さめの値を与えている．
 
 R のコード全体は以下：
 
