@@ -40,15 +40,15 @@ for(i in 1:100){
   df <- data.frame(time=1:Tmax,
                    Deaths=Deaths,
                    Cases=Cases,
-                   cCFR = Deaths/Cases,
-                   aCFR = Deaths/At,
+                   nCFR = Deaths/Cases,
+                   cCFR = Deaths/At,
                    group=i)
   
   res[[i]] <- df  
 }
 
 res <- bind_rows(res)
-res_meth <- pivot_longer(res, cCFR:aCFR, names_to = "method")
+res_meth <- pivot_longer(res, nCFR:cCFR, names_to = "method")
 
 ggplot(data = res_meth, aes(x=time, y=value, group=group))+
   geom_line(linewidth=0.1)+
