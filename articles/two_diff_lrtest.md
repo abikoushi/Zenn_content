@@ -3,7 +3,7 @@ title: "2つの尤度比検定：正規分布による例題"
 emoji: "🍒"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [R, 統計学]
-published: false
+published: true
 ---
 
 ## はじめに
@@ -30,7 +30,7 @@ $$
 
 $$
 \begin{aligned}
-L(\mu_1, \mu_0) &= \exp\left( \sum_{i=1}^{n}\frac{1}{2}(X_i-\mu_1)^2 - \sum_{i=1}^{n}\frac{1}{2}(X_i-\mu_0)^2 \right) \\
+L(\mu_1, \mu_0) &= \exp\left( -\sum_{i=1}^{n}\frac{1}{2}(X_i-\mu_1)^2 + \sum_{i=1}^{n}\frac{1}{2}(X_i-\mu_0)^2 \right) \\
 &= \exp\left( (\mu_1 - \mu_0)\left(\sum_{i=1}^{n}X_i\right)- \frac{n}{2}(\mu_1^2 - \mu_0^2) \right).
 \end{aligned}
 $$
