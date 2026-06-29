@@ -73,3 +73,38 @@ $$
 
 ## 数値計算してみる
 
+以下では上の「ネイマン・ピアソンの補題により最強力検定になる尤度比検定」を method1，「最尤推定量を用いる尤度比検定」を method2 と略記する．
+
+R を用いて次のようにシミュレーション用関数を書いた．
+
+```r
+pvsimfun <- function(n, mu, mu0){
+  pv1 <- numeric(10000)
+  pv2 <- numeric(10000)
+  for(i in 1:10000){
+    x <- rnorm(n, mu)
+    xbar <- mean(x)
+    pv1[i] <- pnorm(sqrt(n)*(xbar-mu0), lower.tail=FALSE)
+    lr2 <- 2*(sum(dnorm(x, xbar, 1, log=TRUE)) - sum(dnorm(x, mu0, 1, log=TRUE)))
+    pv2[i] <- pchisq(lr2, df=1, lower.tail = FALSE)
+  }
+  data.frame(method1=pv1, method2=pv2)
+}
+
+```
+
+まずアルファエラーのシミュレーション結果をP値の分布で示す．
+
+![](/images/two_diff_lrtest/pv_alpha.png)
+
+45度の対角線上に乗っていることから，どちらの手法でも P 値が一様分布になっており，名目上の有意水準が保たれていることがわかる．
+
+次に検出力のシミュレーション結果をP値の分布で示す．帰無仮説は $\mu_0 = 0$ で固定した．
+
+![](/images/two_diff_lrtest/pv_beta.png)
+
+method1 のほうが検出力が高いことがわかる．
+
+作図も含めた R のコード全体はこちら：
+
+https://github.com/abikoushi/Zenn_content/blob/main/R/two_diff_lrtest.R
