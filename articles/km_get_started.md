@@ -1,6 +1,6 @@
 ---
 title: "いきなりはじめるカプラン・マイヤー推定量"
-emoji: "📑"
+emoji: "🚧"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [R, 統計学]
 published: true
