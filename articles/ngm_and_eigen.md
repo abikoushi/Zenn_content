@@ -3,7 +3,7 @@ title: "次世代行列の固有値・固有ベクトルについて"
 emoji: "🦔"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [R, 疫学, 線形代数]
-published: false
+published: true
 ---
 
 ## このノートについて
@@ -32,7 +32,7 @@ $$
 と置くことにする．また総感染者数は次のように $N_t$ と置く．
 
 $$
-N_t= I_{C,t}+I_{A,t}= \mathbf1^\top I_t,
+N_t= I_{C,t}+I_{A,t}= \mathbf1' I_t,
 $$
 
 ここで $\mathbf1$ は要素がすべて 1 のベクトル
@@ -40,7 +40,7 @@ $$
 $$
 \mathbf1=
 \begin{pmatrix}
-1\
+1\\
 1
 \end{pmatrix}
 $$
@@ -168,7 +168,7 @@ https://github.com/abikoushi/Zenn_content/blob/main/R/ngm_and_eigen.R
 固有値を $\rho, \lambda$ とし，それぞれの固有値に属する固有ベクトルを $v,u$ とする．すなわち
 
 $$
-Kv=\lambda v,\quad Ku=\rho u, 
+Kv=\rho v,\quad Ku=\lambda u, 
 $$
 
 を満たす．仮定 1 より固有ベクトル $u$, $v$ と，固有ベクトルを並べた行列の逆行列の列ベクトル $w$, $z$ を用いて
@@ -231,11 +231,11 @@ $$
 $$
 \begin{aligned}
 I_t &= K^t I_0  \\
-&=\rho^tv(w^\top I_0) + \lambda^tu(z^\top I_0).
+&=\rho^tv(w' I_0) + \lambda^tu(z' I_0).
 \end{aligned}
 $$
 
-ここで $\alpha=w' x_0$, $\beta=z' x_0$ と置けば
+ここで $\alpha=w' I_0$, $\beta=z' I_0$ と置けば
 
 $$
 I_t=\alpha\rho^tv+\beta\lambda^tu.
@@ -244,10 +244,7 @@ $$
 したがい，
 
 $$
-N_t=
-\alpha\rho^t(\mathbf1^\top v)
-+
-\beta\lambda^t(\mathbf1^\top u).
+N_t = \alpha\rho^t(\mathbf1' v)+\beta\lambda^t(\mathbf1' u).
 $$
 
 ### 命題1
@@ -257,16 +254,13 @@ $N_{t+1}/N_t$ を求める．分子分母を $\rho^t$ で割ると，
 $$
 N_{t+1}/N_t = 
 \frac{
-\alpha\rho(\mathbf1^\top v)
+\alpha\rho(\mathbf1' v)
 +
 \beta(\lambda/\rho)^t
-\lambda(\mathbf1^\top u)
+\lambda(\mathbf1' u)
 }
 {
-\alpha(\mathbf1^\top v)
-+
-\beta(\lambda/\rho)^t
-(\mathbf1^\top u)
+\alpha(\mathbf1' v) + \beta(\lambda/\rho)^t (\mathbf1' u)
 }.
 $$
 
@@ -285,34 +279,21 @@ $$
 小児の集団の感染者割合を考える．
 
 $$
-\frac{I_{C,t}}{N_t} =\frac{
-\alpha v_1
-+
-\beta(\lambda/\rho)^tu_1
-}
-{
-\alpha(\mathbf1^\top v)
-+
-\beta(\lambda/\rho)^t(\mathbf1^\top u)
-}.
+\frac{I_{C,t}}{N_t} =\frac{\alpha v_1+\beta(\lambda/\rho)^tu_1}{\alpha(\mathbf1' v) +\beta(\lambda/\rho)^t(\mathbf1' u)}.
 $$
 
 極限を取れば
 
 $$
-\lim_{t\to\infty}
-\frac{I_{C,t}}{N_t}
-=
-\frac{v_1}{\mathbf1^\top v}.
+\lim_{t\to\infty}\frac{I_{C,t}}{N_t}
+=\frac{v_1}{\mathbf1' v}.
 $$
 
 同様に
 
 $$
-\lim_{t\to\infty}
-\frac{I_{A,t}}{N_t}
-=
-\frac{v_2}{\mathbf1^\top v}.
+\lim_{t\to\infty}\frac{I_{A,t}}{N_t}
+=\frac{v_2}{\mathbf1' v}.
 $$
 
 おしまい．
