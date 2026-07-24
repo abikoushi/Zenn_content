@@ -152,7 +152,7 @@ $N_{t+1}/Nt$ をプロットしたものが次の図である．
 ```
 
 作図も含めた R のコード全体は以下に置く：
-
+https://github.com/abikoushi/Zenn_content/blob/main/R/ngm_and_eigen.R
 
 ## 手計算してみる
 
@@ -238,7 +238,7 @@ $$
 ここで $\alpha=w' x_0$, $\beta=z' x_0$ と置けば
 
 $$
-x_t=\alpha\rho^tv+\beta\lambda^tu.
+I_t=\alpha\rho^tv+\beta\lambda^tu.
 $$
 
 したがい，
@@ -255,6 +255,7 @@ $$
 $N_{t+1}/N_t$ を求める．分子分母を $\rho^t$ で割ると，
 
 $$
+N_{t+1}/N_t = 
 \frac{
 \alpha\rho(\mathbf1^\top v)
 +
@@ -282,12 +283,6 @@ $$
 ### 命題2
 
 小児の集団の感染者割合を考える．
-
-$$
-x_{1,t} = \alpha\rho^tv_1 + \beta\lambda^tu_1.
-$$
-
-したがって
 
 $$
 \frac{I_{C,t}}{N_t} =
