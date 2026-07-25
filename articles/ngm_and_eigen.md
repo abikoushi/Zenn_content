@@ -151,6 +151,8 @@ $N_{t+1}/Nt$ をプロットしたものが次の図である．
 [1]  2.44949 -2.44949
 ```
 
+ちなみにこの固有値は $\pm\sqrt{6}$ で，これは固有方程式を解いて求めてやればわかる．
+
 作図も含めた R のコード全体は以下に置く：
 https://github.com/abikoushi/Zenn_content/blob/main/R/ngm_and_eigen.R
 
