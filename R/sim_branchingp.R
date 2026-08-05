@@ -48,7 +48,7 @@ simulate_branching <- function(mu,
 set.seed(805)
 tree <- simulate_branching(
   mu = 1,
-  lambda = 0.9,
+  lambda = 0.6,
   Tmax = 5
 )
 
