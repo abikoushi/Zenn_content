@@ -135,3 +135,4 @@ R ではこのように行を逐次的に追加していくコードは遅いこ
 
 作図も含めたコード全体は以下に置く：
 
+https://github.com/abikoushi/Zenn_content/blob/main/R/sim_branchingp.R
