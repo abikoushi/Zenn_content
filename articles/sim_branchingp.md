@@ -3,7 +3,7 @@ title: "Rによる分枝過程のシミュレーション"
 emoji: "🚸"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [R, 確率過程]
-published: false
+published: true
 ---
 
 ## はじめに
