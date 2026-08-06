@@ -1,5 +1,5 @@
 ---
-title: "Rによる分枝過程のシミュレーション"
+title: "Rによる連続時間分枝過程のシミュレーション"
 emoji: "🚸"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [R, 確率過程]

@@ -112,3 +112,4 @@ totalcounts <- group_by(res1, group) |>
 
 print(mean(totalcounts))
 print(var(totalcounts))
+print((1/0.6)*expm1(0.6*5))
