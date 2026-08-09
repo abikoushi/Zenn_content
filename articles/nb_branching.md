@@ -3,7 +3,7 @@ title: "Rによる離散時間の分岐過程のシミュレーションとそ�
 emoji: "🪾"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [R, 疫学, 確率過程]
-published: false
+published: true
 ---
 
 ## このノートについて
