@@ -3,7 +3,7 @@ title: "一般分枝過程のマルサス係数（ガンマ分布の場合）"
 emoji: "🌿"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [R, Rcpp, 確率過程]
-published: false
+published: true
 ---
 
 ## はじめに
@@ -67,7 +67,7 @@ $q(\alpha)= E[e^{-\alpha X_i}]$ と置くと，独立性から
 $$
 E[e^{-\alpha S_n}]
 = E[e^{-\alpha X_1}]\cdots E[e^{-\alpha X_n}]
-=q(r)^n.
+=q(\alpha)^n.
 $$
 
 したがってマルサス係数を決める方程式は
@@ -108,12 +108,12 @@ $$
 ![](/images/gamma_branching_process/tree.png)
 *横軸がノードの発生時刻，縦軸が世代*
 
-分枝していく過程がシミュレーションできていそうなことがわかる．
+分枝過程がシミュレーションできていそうなことがわかる．
 
 次に10000回のシミュレーション結果で，総ノード数の対数をプロットしてみる．
 
 ![](/images/gamma_branching_process/count.png)
-*横軸がノードの発生時刻，縦総ノード数の対数．オレンジの点線は傾き $\alpha$ の直線．*
+*横軸がノードの発生時刻，縦ノード数の対数．オレンジの点線は傾き $\alpha$ の直線．*
 
 傾きが上で求めた $\alpha$ と一致していそうなことがわかる．
 
