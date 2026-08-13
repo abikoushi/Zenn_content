@@ -3,6 +3,7 @@ library(ggplot2)
 library(Rcpp)
 Rcpp::sourceCpp("./cpp/gamma_branching_process.cpp")
 
+set.seed(813)
 tree <- simulate_branching_cpp(
   a = 2,
   b = 1,
@@ -30,11 +31,11 @@ p <- ggplot(tree) +
   labs(x = "time", y="generation") +
   theme_classic()
 print(p)
-
+ggsave("tree.png", plot = p, width = 7, height = 7)
 
 simulate_count <- function(a,b){
-  res <- vector("list",5000)
-  for(i in 1:5000){
+  res <- vector("list",10000)
+  for(i in 1:10000){
     tree <- simulate_branching_cpp(
       a = a,
       b = b,
@@ -49,24 +50,23 @@ simulate_count <- function(a,b){
   bind_rows(res)
 }
 
-set.seed(1234)
+set.seed(813)
 a <- 2
-b <- 0.5
+b <- 1
 res1 <- simulate_count(a, b)
 alpha <- b*(2^(1/a)-1)
 
-p <- ggplot(res1, aes(time, log1p(count))) +
+p <- ggplot(res1, aes(time, log(count))) +
   geom_step(aes(group=group), linewidth=0.01) +
   geom_abline(slope = alpha, colour="orangered", linetype = 2, linewidth = 1.5)+
   theme_classic()
 print(p)
-
+ggsave("count.png", plot = p, width = 7, height = 7)
 
 totalcounts <- group_by(res1, group) |> 
   summarise(count = last(count)) |> 
   pull(count)
 
-print(mean(totalcounts))
-print(expm1(alpha*10))
-
+mean(totalcounts)
+var(totalcounts)
 
