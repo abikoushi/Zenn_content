@@ -27,18 +27,18 @@ Nishiura, H., Yan, P., Sleeman, C. K., & Mode, C. J. (2012). Estimating the tran
 第 $n$ 世代の $i$ 番目の感染者が生み出す2次感染者数を $X_i(n)$ と置く．1人の感染者から生み出される感染者数 $X_i(n)$ を独立な負の二項分布とする．平均が $R_0$ となるよう，ここでの負の二項分布の確率関数は次のようにパラメータ化される．
 
 $$
-\Pr(X_i(n)=x) = \frac{\Gamma(k+x)}{x!\Gamma(k)}\left(\frac{R_0}{R_0+k}\right)^x \left(1+\frac{R_0}{k}\right)^{-k} \tag{1}
+\Pr(X_i(n)=x) = \frac{\Gamma(k+x)}{x!\Gamma(k)}\left(\frac{R_0}{R_0+k}\right)^x \left(1+\frac{R_0}{k}\right)^{-k}
 $$
 
 ここでの $\Gamma(x)$ はガンマ関数である．この分布の平均は $R_0$，分散は $R_0+R_0^2/k$ となる
 
-R の `*nbinom` 関数を使う際は，次のように置くと (1) の確率関数と一致する．
+R の `*nbinom` 関数を使う際は，次のように置くと上記の確率関数と一致する．
 
 $$
 \texttt{size} \leftarrow k, \quad \texttt{mu} \leftarrow R_0
 $$
 
-あるいは　$\texttt{prob} \leftarrow k/(k+R_0)$ としてもいい．
+あるいは　$\texttt{prob} \leftarrow k/(k+R_0)$ と，`mu` の代わりに `prob` を指定してもいい．
 
 イメージをつかむため，まず9回のシミュレーション結果を図示してみる．9という中途半端な数なのは単に3×3のプロットに配置したかったからという理由による．$R_0=0.6$, $k=5$ とした．
 
@@ -89,7 +89,7 @@ $$
 \end{cases}
 $$
 
-このことを10000回のシミュレーションで確認しよう．この総感染者数 $Y$ の確率関数は次のように実装した．
+このことを10000回のシミュレーションで確認しよう．引き続き$R_0=0.6$, $k=5$ とした．この総感染者数 $Y$ の確率関数は次のように実装した．
 
 ```r
 prob_totalsize <- function(y,R0,k){
