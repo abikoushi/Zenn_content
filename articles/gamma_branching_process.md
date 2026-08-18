@@ -47,7 +47,7 @@ $$
 
 $$
 \int_0^\infty e^{-\alpha t} \mu(dt)=
-\int_0^\infty e^{-\alpha t} \sum_{n}^{\infty}P(S_n \in dt)
+\int_0^\infty e^{-\alpha t} \sum_{n=1}^{\infty}P(S_n \in dt)
 $$
 
 より，マルサス係数は次の方程式を満たす $\alpha$ である．
