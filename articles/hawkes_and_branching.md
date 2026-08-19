@@ -196,11 +196,10 @@ ll <- function(par, ti, Tau){
 
 $$
 \begin{aligned}
-\gamma = \int_0^\infty
-E[g_i(u)] \, du=
-\int_0^\infty
-\alpha e^{-\beta u} \, du
-=\frac{\alpha}{\beta}.
+\gamma &= \int_0^\infty
+E[g_i(u)] \, du\\
+&=\int_0^\infty\alpha e^{-\beta u} \, du\\
+&=\frac{\alpha}{\beta}.
 \end{aligned}
 $$
 
