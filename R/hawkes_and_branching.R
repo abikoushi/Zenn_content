@@ -79,32 +79,30 @@ b <- 1
 set.seed(20260819)
 dat <- simulate_branching_death(mu, a, b, Tau)
 
-segments <- dplyr::filter(dat, parent > 0) |> 
-  rowwise() |> 
+set.seed(1);tree_for_plot <- mutate(dat, generation = generation+runif(n(), -0.2, 0.2))
+
+segments <- dplyr::filter(tree_for_plot, parent>0) |>
+  rowwise() |>
   mutate(
-    x = dat$birth_time[dat$id == parent],
-    y = dat$generation[dat$id == parent],
+    x = birth_time,
+    y = tree_for_plot$generation[tree_for_plot$id == parent],
     xend = birth_time,
-    yend = generation-0.05
+    yend = generation - 0.05
   )
 
-ggplot(dat) +
+ggplot(tree_for_plot) +
   geom_segment(
     data = segments,
     aes(x = x, y = y, xend = xend, yend = yend),
     arrow = arrow(length = unit(0.02, "npc")),
     colour="grey") +
-  geom_segment(aes(x = birth_time, xend=death_time, y = generation, yend=generation),
-               position = position_jitter(height = 0.05, seed = 123))+
-  geom_point(aes(birth_time, generation), size=3, shape=1,
-             position = position_jitter(height = 0.05, seed = 123)) +
-  geom_point(aes(death_time, generation), size=3, shape=4,
-             position = position_jitter(height = 0.05, seed = 123)) +
+  geom_segment(aes(x = birth_time, xend=death_time, y = generation, yend=generation))+
+  geom_point(aes(birth_time, generation), size=3, shape=1) +
+  geom_point(aes(death_time, generation), size=3, shape=4) +
   geom_rug(aes(x=birth_time))+
   scale_y_reverse() +
   labs(x = "time", y="generation") +
   theme_bw()
-
 ggsave("birth_death.png", width = 7, height = 7)
 
 xv <- seq(0,10,by=0.01)
