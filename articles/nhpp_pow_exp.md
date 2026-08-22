@@ -2,8 +2,8 @@
 title: "時間変換による非定常ポアソン過程のシミュレーション：べき乗則と指数則"
 emoji: "⏳️"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [R]
-published: false
+topics: [R, 確率過程]
+published: true
 ---
 
 ## はじめに
@@ -22,7 +22,7 @@ published: false
 次の累積強度関数を持つ非定常ポアソン過程をべき乗則ポアソン過程と呼ぶことにする（ワイブル過程と呼ばれることもあるが，ワイブル分布の再生過程と紛らわしいかと思い，"power-law poisson process" を直訳した）.
 
 $$
-H(t) =\left( \frac{t}{\alpha} \right)^\beta \quad (\alpha>0, \beta>0). 
+H(t) =\left( \frac{t}{\alpha} \right)^\beta \quad (\alpha>0, \  \beta>0). 
 $$
 
 非定常ポアソン過程にしたがう確率変数 $t_1$ は分布関数 $F(t)=1-\exp(-H(t))$ を持つ分布に従う．
