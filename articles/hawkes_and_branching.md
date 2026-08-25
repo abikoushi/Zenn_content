@@ -30,10 +30,10 @@ $$
 
 発生時刻 $t_i$ のノード $i$ は $t_i+L_i$ で死亡し，それ以降は子ノードを産まなくなる．
 
-ノード $i$ の子ノードの発生する強度は，
+$L_i$ を所与としたときのノード $i$ の子ノードの発生する強度は，
 
 $$
-g_i(t) =\alpha \mathbf 1(t_i<t<t_i+L_i)
+g_i(t|L_i) =\alpha \mathbf 1(t_i<t<t_i+L_i)
 $$
 
 ここで $\mathbf 1(t_i<t<t_i+L_i)$ は指示関数とした（$t_i<t<t_i+L_i$ を満たすとき1，そうでなければ0の値を取る）．
@@ -48,10 +48,10 @@ $$
 よって，ノード $i$ の子ノードの発生する強度の期待値は，
 
 $$
-E[g_i(t)]=\alpha e^{-\beta(t-t_i)}.
+g_i(t) = E[g_i(t|L_i)]=\alpha e^{-\beta(t-t_i)}.
 $$
 
-これを過去の履歴 $H_t$ について足して，時刻 $t$ における条件付き強度の期待値は，
+これを過去の履歴 $H_t$ について足して，時刻 $t$ における条件付き強度は，
 
 $$
 \lambda(t|H_t)=
@@ -192,12 +192,12 @@ ll <- function(par, ti, Tau){
 
 ## 分枝比
 
-分枝比（branching ratio）と呼ばれる量 $\gamma$ も見ておこう．分枝比はカーネル関数を区間 $[0, \infty]$ で積分した値として定義される．
+分枝比（branching ratio）と呼ばれる量 $\gamma$ も見ておこう．分枝比はカーネル関数 $g_i(t)$ を区間 $[0, \infty]$ で積分した値として定義される．
 
 $$
 \begin{aligned}
 \gamma &= \int_0^\infty
-E[g_i(u)] \, du\\
+g_i(u) \, du\\
 &=\int_0^\infty\alpha e^{-\beta u} \, du\\
 &=\frac{\alpha}{\beta}.
 \end{aligned}
