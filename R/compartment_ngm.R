@@ -113,6 +113,17 @@ Solm = function(t, P, Pinv, values, yini){
   (P %*% diag(exp(t*values)) %*% Pinv) %*% yini  
 }
 
+Sigma <- matrix(c(-pars["nu"], 0,
+         pars["nu"], -pars["gamma"]), nrow = 2, byrow = TRUE)
+
+print(solve(Sigma))
+print(
+  matrix(c(-1/pars["nu"], 0,
+           -1/pars["gamma"], -1/pars["gamma"]), nrow = 2, byrow = TRUE)  
+)
+
+
+
 A <- matrix(c(0, pars["beta"],
               0, 0),nrow = 2, byrow = TRUE) + 
   matrix(c(-pars["nu"], 0,
