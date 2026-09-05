@@ -123,7 +123,6 @@ print(
 )
 
 
-
 A <- matrix(c(0, pars["beta"],
               0, 0),nrow = 2, byrow = TRUE) + 
   matrix(c(-pars["nu"], 0,
