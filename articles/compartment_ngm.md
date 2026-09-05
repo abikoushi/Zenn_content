@@ -95,6 +95,8 @@ df_state <- data.frame(S=seq(1, 991, by=10)) %>%
 
 ## 例2：SEIRモデル
 
+次の連立微分方程式で表されるモデルを SEIR モデルと呼ぶ．
+
 $$
 \begin{aligned}
 \dot{S} &= -\beta \frac{SI}{N},\\
