@@ -51,7 +51,7 @@ ggsave("SIR1.png", width = 7, height = 7)
 ####
 #exp growth
 ####
-A <- pars$beta + diag(-pars$gamma, pars$k)
+A <- pars$beta + diag(-pars$gamma, pars$n)
 eiA <- eigen(A)
 
 matexp = function(t, P, Pinv, values, yini){
@@ -85,7 +85,7 @@ ggsave("SIR_exp.png", width = 7, height = 7)
 #final size
 #####
 
-KL <- pars$beta%*%diag(1/pars$gamma, pars$k)
+KL <- pars$beta%*%diag(1/pars$gamma, pars$n)
 ei_KL <- eigen(KL)
 
 sir_out_rem <- dplyr::filter(sir_out, grepl("^R",name))
