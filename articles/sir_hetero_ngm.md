@@ -41,7 +41,7 @@ $$
 
 ここで $\circ$ はアダマール積（ベクトルの要素ごとの積）とした．
 
-
+![](/images/sir_hetero_ngm/SIR1.png)
 
 ## 次世代行列の導入
 
@@ -76,6 +76,8 @@ $$
 $$
 
 初期の感染は時間 $t$ について指数関数 $\exp((T+\Sigma)t)$ で近似できる．この指数関数と先程の SIR モデルの解を重ねてみる．
+
+![](/images/sir_hetero_ngm/SIR_exp.png)
 
 この分解に基づき行列 $K_L$ を次のように定義する．
 
@@ -126,3 +128,5 @@ z_a= 1- \exp\left(\sum_{b=1}^nR_{ab} z_b \right).
 $$
 
 この方程式を満たす $z_a$ が最終規模である．
+
+![](/images/sir_hetero_ngm/SIR_R.png)

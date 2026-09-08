@@ -4,14 +4,6 @@ library(dplyr)
 library(deSolve)
 library(nleqslv)
 
-sol_ode_from_states <- function(df_state, times, func, parms){
-  res_df <- lapply(1:nrow(df_state), function(i){
-    ode_out <- ode(y=c(unlist(df_state[i,,drop=FALSE])), times=times, func=func, parms=parms)
-    data.frame(group=i, ode_out)
-  })
-  bind_rows(res_df)
-}
-
 SIRmod <- function(Time, State, Pars) {
   k <- Pars$k
   beta <- Pars$beta
@@ -62,6 +54,8 @@ ggplot(sir_out, aes(x = time, y = value,
   scale_color_manual(values = col2)+
   theme_bw(15)
 
+ggsave("SIR1.png", width = 7, height = 7)
+
 ####
 #exp growth
 ####
@@ -93,6 +87,7 @@ ggplot(sir_out_inf, mapping = aes(x=time, y=value, group=name, colour=name))+
   ylim(c(0,1.05)) +
   theme_bw(15)
 
+ggsave("SIR_exp.png", width = 7, height = 7)
 
 #####
 #final size
@@ -114,3 +109,5 @@ ggplot(sir_out_rem, aes(x = time, y = value, colour = subgroup))+
   facet_grid(row=vars(name)) + 
   scale_color_manual(values = col2)+
   theme_bw(15)+ylim(c(0,1))
+
+ggsave("SIR_R.png", width = 7, height = 7)
