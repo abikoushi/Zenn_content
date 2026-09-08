@@ -10,6 +10,7 @@ published: false
 
 [西浦博　編著『感染症流行を読み解く数理』（日本評論社）](https://www.nippyo.co.jp/shop/book/8827.html) の第１章の「人口の異質性を加味した SIR モデル」の節を，自分なりに数値例を補いながら読んでいくものです．この第１章の筆者は小林鉄郎，西浦博です．ただし，（当たり前かもしれませんが，）この文書の責任は私にあります．本文中のコードは R 言語です．
 
+
 ## 人口の異質性を加味した SIR モデル
 
 人口に $n$ 個のサブグループがあるとして，$a=1,\ldots, n$ について次の連立微分方程式で表されるモデルを考える．
@@ -29,7 +30,7 @@ $$
 
 今回は $S_a(t)+I_a(t)+R_a(t)=1$ になるよう，サブグループごとに正規化されているとする．
 
- $S(t) = (S_1(t),S_2(t), \ldots, S_n(t))'$, $I(t) = (I_1(t),I_2(t), \ldots, I_n(t))'$, $T(t) = (I_1(t),I_2(t), \ldots, R_n(t))'$， さらに $\beta = (\beta_{ab})$ とまとめて置く．
+ $S(t) = (S_1(t),S_2(t), \ldots, S_n(t))'$, $I(t) = (I_1(t),I_2(t), \ldots, I_n(t))'$, $T(t) = (I_1(t),I_2(t), \ldots, R_n(t))'$， さらに $\beta = (\beta_{ab})$ とまとめて置くと (1) の微分方程式は次のようにも書ける．
 
 $$
 \begin{aligned}
@@ -41,11 +42,58 @@ $$
 
 ここで $\circ$ はアダマール積（ベクトルの要素ごとの積）とした．
 
+したがい，R 言語のコードとしてはこの微分方程式は次のように書ける．
+
+```r
+SIRmod <- function(Time, State, Pars) {
+  n <- Pars$n
+  beta <- Pars$beta
+  gamma <- Pars$gamma
+  N <- Pars$N
+  S <- State[1:n]
+  I <- State[(n+1):(2*n)]
+  R <- State[(2*n+1):(3*n)]
+  dS <- - drop(beta%*%I)*S/N
+  dI <- drop(beta%*%I)*S/N - gamma*I
+  dR <- gamma*I
+  return(list(c(dS, dI, dR)))
+}
+```
+
+パラメータと初期値を与え，この方程式を数値的に解くには次のようにする．
+
+```r
+library(deSolve)
+set.seed(20260909); beta <- matrix(rexp(4,1), byrow = TRUE, nrow = 2)
+
+N <- c(1, 1)
+pars  <- list(beta = beta, gamma = 0.1, N=N, n=2)
+times <- seq(0, 100, by = 0.1)
+
+ini = c(S1=1, S2=0.999,
+        I1=0, I2=0.001,
+        R1=0, R2=0)
+
+ode_out <- ode(y=ini, times=times, func=SIRmod, parms=pars)
+```
+
+ここでは $\beta$ は疑似乱数で指定した．
+
+```r
+> print(beta)
+          [,1]       [,2]
+[1,] 0.9944232 0.10892111
+[2,] 0.1391528 0.04660819
+```
+
+数値解をプロットしてみる．
+
 ![](/images/sir_hetero_ngm/SIR1.png)
+
 
 ## 次世代行列の導入
 
-$S_a(t) \approx 1$ ($a=1,\ldots g$) が成り立つ感染流行初期を考える．このとき，感染 $I$ についての方程式は次のようになる．
+$S_a(t) \approx 1$ ($a=1,\ldots n$) が成り立つ感染流行初期を考える．このとき，感染 $I(t)$ についての方程式は次のようになる．
 
 $$
 \frac{d}{dt}I(t) = \beta I(t) - \gamma I(t)
@@ -75,9 +123,10 @@ $$
 .
 $$
 
-初期の感染は時間 $t$ について指数関数 $\exp((T+\Sigma)t)$ で近似できる．この指数関数と先程の SIR モデルの解を重ねてみる．
+初期の感染は時間 $t$ についての行列指数関数 $\exp((T+\Sigma)t)$ で近似できる．この指数関数と先程の SIR モデルの解を重ねてみる．
 
 ![](/images/sir_hetero_ngm/SIR_exp.png)
+*点線が指数関数*
 
 この分解に基づき行列 $K_L$ を次のように定義する．
 
@@ -129,4 +178,29 @@ $$
 
 この方程式を満たす $z_a$ が最終規模である．
 
+この非線形連立方程式を数値的に解くには `nleqslv` パッケージが利用できる．
+
+```r
+library(nleqslv)
+KL <- pars$beta%*%diag(1/pars$gamma, pars$k)
+fz <- function(z){z + expm1(-KL%*%z)}
+res <- nleqslv(c(1,1), fz)
+```
+
+最終規模を表す方程式の解と $R(t)$ を並べてプロットしてみる．
+
 ![](/images/sir_hetero_ngm/SIR_R.png)
+*点線が最終規模を表す方程式の解*
+
+
+## 関連記事など
+
+駆け足になってしまった部分もあると思うので，わかりにくかった箇所は適宜以下の記事も参照してもらえるとうれしい．
+
+- [SIRモデルと基本再生産数](https://zenn.dev/abe2/articles/sir_model_and_r0)
+- [行列の指数関数と常微分方程式についてのイントロ](https://zenn.dev/abe2/articles/intro_matexp)
+- [Diekmann et al. (2010) より，疫学における区画モデルと次世代行列の関係](https://zenn.dev/abe2/articles/compartment_ngm)
+
+作図も含めたコード全体は以下に置く：
+
+https://github.com/abikoushi/Zenn_content/blob/main/R/sir_hetero_ngm.R

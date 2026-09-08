@@ -5,33 +5,25 @@ library(deSolve)
 library(nleqslv)
 
 SIRmod <- function(Time, State, Pars) {
-  k <- Pars$k
+  n <- Pars$n
   beta <- Pars$beta
   gamma <- Pars$gamma
   N <- Pars$N
-  S <- State[1:k]
-  I <- State[(k+1):(2*k)]
-  R <- State[(2*k+1):(3*k)]
+  S <- State[1:n]
+  I <- State[(n+1):(2*n)]
+  R <- State[(2*n+1):(3*n)]
   dS <- - drop(beta%*%I)*S/N
   dI <- drop(beta%*%I)*S/N - gamma*I
   dR <- gamma*I
   return(list(c(dS, dI, dR)))
 }
 
-# beta <- matrix(c(0.3, 0.2, 0.2,
-#                  0.2, 0.2, 0.1,
-#                  0.2, 0.1, 0.1), byrow = TRUE, nrow = 3)
-
 set.seed(20260909); beta <- matrix(rexp(4,1), byrow = TRUE, nrow = 2)
 print(beta)
 
 N <- c(1, 1)
-pars  <- list(beta = beta, gamma = 0.1, N=N, k=2)
+pars  <- list(beta = beta, gamma = 0.1, N=N, n=2)
 times <- seq(0, 100, by = 0.1)
-
-# ini = c(S1=1, S2=0.999, S3=1,
-#         I1=0, I2=0.001, I3=0,
-#         R1=0, R2=0, R3=0)
 
 ini = c(S1=1, S2=0.999,
         I1=0, I2=0.001,
