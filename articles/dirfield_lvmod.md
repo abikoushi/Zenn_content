@@ -54,7 +54,7 @@ out   <- ode(yini, times, LVmod, pars)
 
 タイトルにある方向場とは下の図のように微分方程式の解の方向を $(x,y)$ の平面上に示したものを指します．
 
-![](/images/dirfield_lvmod/lvmod1.png)
+![](/images/dirfield_lvmod/lvmod_dir.png)
 
 図を見ると点線またぐところで方向が性質的に変わることがわかります.左上から反時計回りに,
 
