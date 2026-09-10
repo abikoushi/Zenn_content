@@ -3,7 +3,7 @@ title: "R による方向場の描き方（ロトカ・ヴォルテラ方程式�
 emoji: "🦈"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [R, 微分方程式]
-published: false
+published: true
 ---
 
 ## 本文
@@ -56,7 +56,7 @@ out   <- ode(yini, times, LVmod, pars)
 
 ![](/images/dirfield_lvmod/lvmod_dir.png)
 
-図を見ると点線またぐところで方向が性質的に変わることがわかります.左上から反時計回りに,
+図を見ると点線またぐところで方向が性質的に大きく変わることがわかります.左上から反時計回りに,
 
 - $x$: 減少, $y$: 減少
 - $x$: 増加, $y$: 減少
