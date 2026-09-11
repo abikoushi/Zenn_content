@@ -24,9 +24,9 @@ $$
 - $c$ : $y$ の死亡率
 - $d$ : 捕食による $y$ の増加率
 
-パラメータ $a$, $b$, $c$, $d$ はすべて正とします.
+パラメータ $a$, $b$, $c$, $d$ はすべて正とします．
 
-この微分方程式を R 言語で数値的に解くには次のようにします.
+この微分方程式を R 言語で数値的に解くには次のようにします．
 
 ```r
 library(dplyr)
@@ -48,7 +48,7 @@ times <- seq(0, 50, by = 0.1)
 out   <- ode(yini, times, LVmod, pars)
 ```
 
-解をプロットしてみます.
+解をプロットしてみます．
 
 ![](/images/dirfield_lvmod/lvmod1.png)
 
@@ -56,7 +56,7 @@ out   <- ode(yini, times, LVmod, pars)
 
 ![](/images/dirfield_lvmod/lvmod_dir.png)
 
-図を見ると点線またぐところで方向が性質的に大きく変わることがわかります.左上から反時計回りに,
+図を見ると点線またぐところで方向が性質的に大きく変わることがわかります．左上から反時計回りに，
 
 - $x$: 減少, $y$: 減少
 - $x$: 増加, $y$: 減少
@@ -65,13 +65,13 @@ out   <- ode(yini, times, LVmod, pars)
 
 です.
 
-点線は $(x', y')$ が 0 になる点の集合で,これをヌルクラインと呼びます.
+点線は $(x', y')$ が 0 になる点の集合で,これをヌルクラインと呼びます．
 
-今回のロトカ・ヴォルテラ方程式の場合は, $y=a/b$ と $x=c/d$ がヌルクラインです.
+今回のロトカ・ヴォルテラ方程式の場合は，$y=a/b$ と $x=c/d$ がヌルクラインです．
 
-方向場の図は以下のような方法で描きました.
+方向場の図は以下のような方法で描きました．
 
-まず,いろいろな初期条件 `df_state` で微分方程式を片っ端から解く関数を宣言します.
+まず，いろいろな初期条件 `df_state` で微分方程式を片っ端から解く関数を宣言します．
 
 ```r
 sol_ode_from_states <- function(df_state, times, func, parms){
@@ -83,7 +83,7 @@ sol_ode_from_states <- function(df_state, times, func, parms){
 }
 ```
 
-初期値を指定して短時間だけ解きます.
+初期値を指定して短時間だけ解きます．`expand.grid` は入力されたベクトルの要素のすべての可能な組み合わせを列挙したデータフレームを返す関数です．
 
 ```r
 df_state <- expand.grid(Prey=seq(0.1, 2, 0.1),
@@ -93,7 +93,7 @@ times <- seq(0, 0.1, by=0.02)
 res <- sol_ode_from_states(df_state=df_state, times=times, func=LVmod, parms=pars)
 ```
 
-プロットはこちら.
+プロットはこちら．
 
 ```r
 ggplot(data=res, aes(x=Prey, y=Predator, group=group, color=time)) +
