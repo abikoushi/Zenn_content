@@ -3,7 +3,7 @@ title: "logsumexp と softmax"
 emoji: "🍦"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [R, 数値計算]
-published: false
+published: true
 ---
 
 ## logsumexp
