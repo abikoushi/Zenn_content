@@ -3,7 +3,7 @@ title: "expm1 と log1p の紹介"
 emoji: "🕳️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [Julia, 数値計算]
-published: false
+published: true
 ---
 
 ## このノートについて
@@ -133,7 +133,7 @@ plot(log, 0, 4, label="log")
 plot!(mylog, label="mylog", linestyle=:dash)
 ```
 
-![](/images/expm1_and_log1p/myexp.png)
+![](/images/expm1_and_log1p/mylog.png)
 
 プロットをみると `log` と `mylog` で近い値になっていることがわかります．
 
@@ -154,4 +154,4 @@ julia> log1p(1e-16)
 
 GIF アニメの作成も含めた Julia のコードはこちら：
 
-https://github.com/abikoushi/Zenn_content/blob/main/jl/expm1_and_log1p.R
+https://github.com/abikoushi/Zenn_content/blob/main/jl/expm1_and_log1p.jl
