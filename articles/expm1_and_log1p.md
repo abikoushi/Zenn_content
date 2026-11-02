@@ -1,5 +1,5 @@
 ---
-title: "expm1 と log1p"
+title: "expm1 と log1p の紹介"
 emoji: "🕳️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [Julia, 数値計算]
@@ -123,7 +123,7 @@ end
 function mylog(x)
     x > 0 || throw(DomainError(x))
     log2 = 0.6931471805599453
-    m, e = frexp(x)
+    m, e = frexp(x) #仮数部と指数部
     r = 2m - 1.0
     k = e - 1
     return k*log2 + poly_n_log1p(r, 20)
