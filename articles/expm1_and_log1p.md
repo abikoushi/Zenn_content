@@ -155,3 +155,22 @@ julia> log1p(1e-16)
 GIF アニメの作成も含めた Julia のコードはこちら：
 
 https://github.com/abikoushi/Zenn_content/blob/main/jl/expm1_and_log1p.jl
+
+
+## 使用例（追記）
+
+私の好きな分野である確率・統計に関する使用例を紹介しておきます．
+
+パラメータ $\theta$ の指数分布の分布関数 $F(x;\theta)$ は次の形なので `expm1` が自然に使えます．
+
+$$
+F(x;\theta) = 1 - \exp(-x/\theta) = - (\exp(-x/\theta)-1).
+$$
+
+また，`log1p` は `expm1` の逆関数にあたるので，分布関数の逆関数である分位点関数には `log1p` が使えます．
+
+$$
+F^{-1}(p;\theta) = -\log(1 + (-p))\theta.
+$$
+
+実際 `Distributions.jl` の指数分布についての `cdf`, `quantile` の実装にはそれぞれ `expm1`, `log1p` が使われています（https://github.com/JuliaStats/Distributions.jl/blob/master/src/univariate/continuous/exponential.jl）．
