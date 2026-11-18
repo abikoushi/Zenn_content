@@ -176,7 +176,7 @@ ggplot(sim$data, aes(time,infected))+
   ylim(c(0,11000))+
   theme_classic(12)
 
-#ggsave(filename = "infected.png", width = 5, height = 5)
+ggsave(filename = "infected.png", width = 5, height = 5)
 
 dat_pairs <- data.frame(t_symptomatic = sim$t_symptomatic,
                         t_infected = sim$t_infected,
