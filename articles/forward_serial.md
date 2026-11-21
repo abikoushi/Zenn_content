@@ -476,7 +476,7 @@ $$
 \int_{-\infty}^{\infty} e^{-rs}f_0(s)\,ds = \int_0^\infty e^{-ru}g(u)\,du .
 $$
 
-(1) とまとめると，
+式 (1) とまとめると，
 
 $$
 \frac{1}{R_0} = \int_0^\infty e^{-ru}g(u)\,du = \int_{-\infty}^{\infty} e^{-rs}f_0(s)\,ds.
